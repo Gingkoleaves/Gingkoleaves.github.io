@@ -34,8 +34,14 @@ jekyll-archives:
     tag: /tags/:name/
     year: /archives/:year/
 
+highlighter: rouge
+markdown: kramdown
+kramdown:
+  input: GFM  # 使用 GitHub 风格的 Markdown
+
 # 插件配置
 plugins:
+  - jekyll-remote-theme
   - jemoji
   - jekyll-feed
   - jekyll-sitemap

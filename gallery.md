@@ -72,14 +72,14 @@ permalink: /gallery/
 
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 1rem;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
   margin-top: 1rem;
 }
 
 .gallery-item {
   margin: 0;
-  padding: 0.75rem;
+  padding: 0.9rem;
   border: 1px solid var(--surface-border);
   border-radius: 16px;
   background: rgba(255, 255, 255, 0.04);
@@ -89,10 +89,11 @@ permalink: /gallery/
 
 .gallery-item img {
   width: 100%;
-  height: auto;
-  object-fit: cover;
+  height: clamp(280px, 60vw, 640px);
+  object-fit: contain;
   display: block;
   border-radius: 12px;
+  background: rgba(0, 0, 0, 0.08);
 }
 
 .gallery-item figcaption {
@@ -114,9 +115,16 @@ permalink: /gallery/
   }
 
   .gallery-grid {
-    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-    gap: 0.75rem;
+    gap: 1rem;
     margin-top: 0.9rem;
+  }
+
+  .gallery-item {
+    padding: 0.75rem;
+  }
+
+  .gallery-item img {
+    height: clamp(220px, 72vw, 420px);
   }
 }
 </style>

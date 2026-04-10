@@ -91,18 +91,23 @@ title: Home
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
-    filter: blur(42px) saturate(0.9) brightness(0.82);
-    transform: scale(1.32);
-    opacity: 0.95;
+    filter: blur(58px) saturate(0.95) brightness(0.78);
+    transform: scale(1.4);
+    opacity: 1;
   }
 
   .hero-image {
-    position: relative;
+    position: absolute;
+    left: 0;
+    bottom: 0;
     z-index: 1;
     display: block;
-    width: min(82vw, 980px);
-    height: auto;
-    margin: 0 auto;
+    width: 100vw;
+    height: calc(100dvh - 60px);
+    max-width: none;
+    object-fit: cover;
+    object-position: center center;
+    filter: saturate(0.92) brightness(0.92);
   }
 
   .hero-overlay {

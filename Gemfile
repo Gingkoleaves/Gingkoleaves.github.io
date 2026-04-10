@@ -1,0 +1,11 @@
+source "https://rubygems.org"
+
+gem "jekyll", "~> 4.4"
+gem "jekyll-remote-theme"
+gem "jemoji"
+gem "jekyll-feed"
+gem "jekyll-sitemap"
+gem "jekyll-archives"
+gem "jekyll-toc"
+gem "jekyll-mentions"
+gem "jekyll-relative-links"

@@ -1,0 +1,63 @@
+---
+layout: default
+---
+
+<div class="container">
+  <h2>
+    {% if page.type == 'tag' %}
+      Tag: {{ page.title }}
+    {% elsif page.type == 'category' %}
+      Category: {{ page.title }}
+    {% elsif page.type == 'year' %}
+      Archive: {{ page.title }}
+    {% else %}
+      Archive: {{ page.title }}
+    {% endif %}
+  </h2>
+
+  <ul class="archive-list">
+    {% assign archive_posts = page.posts | default: site.tags[page.title] | default: site.categories[page.title] %}
+    {% for post in archive_posts %}
+      <li class="archive-item">
+        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        <span class="archive-date">{{ post.date | date: "%Y-%m-%d" }}</span>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+<style>
+.archive-list {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.archive-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 14px;
+  border: 1px solid var(--surface-border);
+  border-radius: 10px;
+  background: var(--surface-bg);
+}
+
+.archive-item a {
+  color: var(--page-text);
+  text-decoration: none;
+}
+
+.archive-item a:hover {
+  text-decoration: underline;
+}
+
+.archive-date {
+  color: var(--muted-text);
+  white-space: nowrap;
+  font-size: 0.9rem;
+}
+</style>
