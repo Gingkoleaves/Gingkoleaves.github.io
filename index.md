@@ -66,19 +66,23 @@ html, body {
 }
 
 .hero-screen {
-  align-items: stretch;
+  min-height: calc(100dvh - 60px);
+  padding-top: 60px;
+  box-sizing: border-box;
+  align-items: center;
   background: var(--page-bg);
 }
 
 .hero-image {
   display: block;
-  width: 100%;
+  width: min(82vw, 980px);
   height: auto;
+  margin: 0 auto;
 }
 
 .hero-overlay {
   position: absolute;
-  top: 0; left: 0;
+  top: 60px; left: 0;
   width: 100%; height: 100%;
   background: linear-gradient(to bottom, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.1) 55%, transparent 100%);
   display: flex; flex-direction: column;
@@ -91,7 +95,7 @@ html, body {
   left: 0;
   right: 0;
   bottom: 0;
-  height: 28vh;
+  height: 34vh;
   background: linear-gradient(to bottom, rgba(18, 18, 18, 0) 0%, var(--page-bg) 100%);
   pointer-events: none;
 }

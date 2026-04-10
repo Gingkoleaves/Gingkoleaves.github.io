@@ -17,8 +17,12 @@ title: Talks
 
 <style>
 .talk-card { 
-  background: #f9f9f9; padding: 15px; border-left: 4px solid #007bff; 
-  margin-bottom: 15px; border-radius: 4px;
+  background: var(--card-bg); padding: 15px; border-left: 4px solid #007bff; 
+  margin-bottom: 15px; border-radius: 4px; border: 1px solid var(--card-border);
+  color: var(--card-text);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
 }
-.meta { font-size: 0.8em; color: #888; margin-top: 10px; }
+.talk-card .content { color: inherit; }
+.meta { font-size: 0.8em; color: var(--card-muted-text); margin-top: 10px; }
 </style>

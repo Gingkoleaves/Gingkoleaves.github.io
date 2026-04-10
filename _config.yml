@@ -11,5 +11,10 @@ collections:
 
 # 插件配置
 plugins:
-  - jekyll-emoji
+  - jemoji
   - jekyll-feed
+  - jekyll-sitemap
+  - jekyll-archives
+  - jekyll-toc
+  - jekyll-mentions # 把 @用户名 自动变成链接（类似 GitHub）。
+  - jekyll-relative-links # 让站内相对链接更稳定，文件移动后不容易坏。
