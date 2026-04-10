@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Personal Homepage</title>
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --accent: #2563eb;
+      --border: #d1d5db;
+      --shadow: 0 10px 20px rgba(15, 23, 42, 0.08);
+      --radius: 14px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: "Inter", "Segoe UI", -apple-system, BlinkMacSystemFont, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.5;
+    }
+
+    .container {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 24px 16px 48px;
+    }
+
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+    }
+
+    .title {
+      margin: 0;
+      font-size: clamp(1.6rem, 2.8vw, 2.4rem);
+      font-weight: 700;
+      outline: none;
+      border-radius: 8px;
+      padding: 4px;
+    }
+
+    .subtitle {
+      margin: 8px 0 0;
+      color: var(--muted);
+      outline: none;
+      border-radius: 8px;
+      padding: 4px;
+    }
+
+    .hint {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .section-title {
+      margin: 0 0 12px;
+      font-size: 1.1rem;
+    }
+
+    .controls, .layout {
+      display: grid;
+      gap: 16px;
+      margin-top: 16px;
+    }
+
+    .demo-list {
+      display: grid;
+      gap: 12px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      margin-top: 8px;
+    }
+
+    .demo-option {
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 12px;
+      background: var(--card);
+    }
+
+    .demo-option h4 { margin: 0 0 8px; }
+    .demo-option p { margin: 0 0 10px; color: var(--muted); font-size: 0.93rem; }
+
+    button, input, textarea {
+      font: inherit;
+    }
+
+    button {
+      border: 1px solid transparent;
+      background: var(--accent);
+      color: #fff;
+      border-radius: 10px;
+      padding: 8px 12px;
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    button:hover { opacity: 0.9; }
+
+    .ghost {
+      background: transparent;
+      color: var(--accent);
+      border-color: var(--accent);
+    }
+
+    textarea, input[type="date"] {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px;
+      background: #fff;
+      color: inherit;
+    }
+
+    textarea { min-height: 150px; resize: vertical; }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 10px;
+    }
+
+    .entries {
+      display: grid;
+      gap: 10px;
+      margin-top: 12px;
+    }
+
+    .entry {
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px;
+      background: #fff;
+    }
+
+    .entry-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 6px;
+    }
+
+    .entry-body {
+      margin: 0;
+      white-space: pre-wrap;
+      outline: none;
+      border-radius: 8px;
+      padding: 4px;
+    }
+
+    [data-layout="classic"] .layout {
+      grid-template-columns: 1fr;
+    }
+
+    [data-layout="split"] .layout {
+      grid-template-columns: 1fr 1fr;
+      align-items: start;
+    }
+
+    [data-layout="magazine"] .layout {
+      grid-template-columns: 2fr 1fr;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      [data-layout="split"] .layout,
+      [data-layout="magazine"] .layout {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    [data-theme="clean"] {
+      --bg: #f5f7fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --accent: #2563eb;
+      --border: #d1d5db;
+      --shadow: 0 10px 20px rgba(15, 23, 42, 0.08);
+      --radius: 14px;
+    }
+
+    [data-theme="night"] {
+      --bg: #0b1220;
+      --card: #111827;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --accent: #60a5fa;
+      --border: #374151;
+      --shadow: 0 12px 24px rgba(0, 0, 0, 0.35);
+      --radius: 14px;
+    }
+
+    [data-theme="paper"] {
+      --bg: #faf3e6;
+      --card: #fffdf7;
+      --text: #3b2f2f;
+      --muted: #6b5f55;
+      --accent: #a16207;
+      --border: #d9c9a5;
+      --shadow: 0 10px 18px rgba(126, 88, 39, 0.12);
+      --radius: 2px;
+    }
+  </style>
+</head>
+<body data-theme="clean" data-layout="classic">
+  <div class="container">
+    <header class="card">
+      <h1 id="profileTitle" class="title" contenteditable="true">My Personal Homepage</h1>
+      <p id="profileSubtitle" class="subtitle" contenteditable="true">Click here to edit: notes manager + diary updates.</p>
+      <p class="hint">Tip: title/subtitle, notes, and diary entries are all editable and saved in your browser.</p>
+    </header>
+
+    <section class="card controls">
+      <div>
+        <h2 class="section-title">Choose a demo style</h2>
+        <div class="demo-list">
+          <div class="demo-option">
+            <h4>Demo A: Clean Classic</h4>
+            <p>Simple, bright, and focused on writing.</p>
+            <button type="button" onclick="applyDemo('clean','classic')">Use Demo A</button>
+          </div>
+          <div class="demo-option">
+            <h4>Demo B: Night Split</h4>
+            <p>Dark mode with side-by-side notes and diary.</p>
+            <button type="button" onclick="applyDemo('night','split')">Use Demo B</button>
+          </div>
+          <div class="demo-option">
+            <h4>Demo C: Paper Journal</h4>
+            <p>Warm paper feel with magazine layout.</p>
+            <button type="button" onclick="applyDemo('paper','magazine')">Use Demo C</button>
+          </div>
+        </div>
+      </div>
+      <div class="actions">
+        <button type="button" class="ghost" onclick="resetAll()">Reset all content</button>
+      </div>
+    </section>
+
+    <main class="layout">
+      <section class="card">
+        <h2 class="section-title">Notes</h2>
+        <textarea id="notesArea" placeholder="Write your notes, ideas, plans..."></textarea>
+        <div class="actions">
+          <button type="button" onclick="saveNotes()">Save notes</button>
+          <button type="button" class="ghost" onclick="clearNotes()">Clear notes</button>
+        </div>
+      </section>
+
+      <section class="card">
+        <h2 class="section-title">Diary</h2>
+        <input id="diaryDate" type="date" />
+        <textarea id="diaryText" placeholder="What happened today?"></textarea>
+        <div class="actions">
+          <button type="button" onclick="addDiaryEntry()">Add entry</button>
+          <button type="button" class="ghost" onclick="saveEntries()">Save edited entries</button>
+        </div>
+        <div id="entries" class="entries"></div>
+      </section>
+    </main>
+  </div>
+
+  <script>
+    const storageKeys = {
+      demo: "homepage-demo",
+      profileTitle: "homepage-profile-title",
+      profileSubtitle: "homepage-profile-subtitle",
+      notes: "homepage-notes",
+      diary: "homepage-diary"
+    };
+
+    const profileTitle = document.getElementById("profileTitle");
+    const profileSubtitle = document.getElementById("profileSubtitle");
+    const notesArea = document.getElementById("notesArea");
+    const diaryDate = document.getElementById("diaryDate");
+    const diaryText = document.getElementById("diaryText");
+    const entriesContainer = document.getElementById("entries");
+
+    function applyDemo(theme, layout) {
+      document.body.dataset.theme = theme;
+      document.body.dataset.layout = layout;
+      localStorage.setItem(storageKeys.demo, JSON.stringify({ theme, layout }));
+    }
+
+    function saveProfile() {
+      localStorage.setItem(storageKeys.profileTitle, profileTitle.textContent.trim() || "My Personal Homepage");
+      localStorage.setItem(storageKeys.profileSubtitle, profileSubtitle.textContent.trim() || "Click here to edit: notes manager + diary updates.");
+    }
+
+    function saveNotes() {
+      localStorage.setItem(storageKeys.notes, notesArea.value);
+      alert("Notes saved.");
+    }
+
+    function clearNotes() {
+      notesArea.value = "";
+      localStorage.setItem(storageKeys.notes, "");
+    }
+
+    function loadEntries() {
+      try {
+        return JSON.parse(localStorage.getItem(storageKeys.diary) || "[]");
+      } catch {
+        return [];
+      }
+    }
+
+    function renderEntries() {
+      const entries = loadEntries();
+      entriesContainer.innerHTML = "";
+
+      if (!entries.length) {
+        entriesContainer.innerHTML = '<p class="hint">No diary entries yet.</p>';
+        return;
+      }
+
+      entries.forEach((entry, index) => {
+        const wrapper = document.createElement("article");
+        wrapper.className = "entry";
+        wrapper.innerHTML = `
+          <div class="entry-head">
+            <strong>${entry.date || "No date"}</strong>
+            <button type="button" class="ghost" data-index="${index}" data-action="delete">Delete</button>
+          </div>
+          <p class="entry-body" contenteditable="true" data-index="${index}">${escapeHtml(entry.text || "")}</p>
+        `;
+        entriesContainer.appendChild(wrapper);
+      });
+    }
+
+    function addDiaryEntry() {
+      const text = diaryText.value.trim();
+      if (!text) {
+        alert("Please write some diary content first.");
+        return;
+      }
+
+      const entries = loadEntries();
+      entries.unshift({
+        date: diaryDate.value || new Date().toISOString().slice(0, 10),
+        text
+      });
+
+      localStorage.setItem(storageKeys.diary, JSON.stringify(entries));
+      diaryText.value = "";
+      renderEntries();
+    }
+
+    function saveEntries() {
+      const entries = loadEntries();
+      const editableBodies = entriesContainer.querySelectorAll(".entry-body");
+      editableBodies.forEach((node) => {
+        const index = Number(node.dataset.index);
+        if (!Number.isNaN(index) && entries[index]) {
+          entries[index].text = node.textContent.trim();
+        }
+      });
+      localStorage.setItem(storageKeys.diary, JSON.stringify(entries));
+      alert("Diary entries saved.");
+      renderEntries();
+    }
+
+    function deleteEntry(index) {
+      const entries = loadEntries();
+      entries.splice(index, 1);
+      localStorage.setItem(storageKeys.diary, JSON.stringify(entries));
+      renderEntries();
+    }
+
+    function resetAll() {
+      if (!confirm("Reset demo, profile, notes, and diary data?")) return;
+
+      Object.values(storageKeys).forEach((key) => localStorage.removeItem(key));
+      document.body.dataset.theme = "clean";
+      document.body.dataset.layout = "classic";
+      profileTitle.textContent = "My Personal Homepage";
+      profileSubtitle.textContent = "Click here to edit: notes manager + diary updates.";
+      notesArea.value = "";
+      diaryDate.value = "";
+      diaryText.value = "";
+      renderEntries();
+    }
+
+    function escapeHtml(text) {
+      return text
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;");
+    }
+
+    function loadAll() {
+      const demo = localStorage.getItem(storageKeys.demo);
+      if (demo) {
+        try {
+          const { theme, layout } = JSON.parse(demo);
+          if (theme) document.body.dataset.theme = theme;
+          if (layout) document.body.dataset.layout = layout;
+        } catch {}
+      }
+
+      profileTitle.textContent = localStorage.getItem(storageKeys.profileTitle) || profileTitle.textContent;
+      profileSubtitle.textContent = localStorage.getItem(storageKeys.profileSubtitle) || profileSubtitle.textContent;
+      notesArea.value = localStorage.getItem(storageKeys.notes) || "";
+      diaryDate.value = new Date().toISOString().slice(0, 10);
+      renderEntries();
+    }
+
+    entriesContainer.addEventListener("click", (event) => {
+      const target = event.target;
+      if (!(target instanceof HTMLElement)) return;
+      if (target.dataset.action === "delete") {
+        const index = Number(target.dataset.index);
+        if (!Number.isNaN(index)) deleteEntry(index);
+      }
+    });
+
+    profileTitle.addEventListener("blur", saveProfile);
+    profileSubtitle.addEventListener("blur", saveProfile);
+
+    loadAll();
+  </script>
+</body>
+</html>
