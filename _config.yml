@@ -1,9 +1,15 @@
-title: My homepage
-email: 2350998@tongji.edu.cn
-description: Everyday homepage
-baseurl: "" 
-url: "gingkoleaves.github.io"
+title: Gingkoleaves
+remote_theme: minitoc  
 
-# activate emoji
+collections:
+  notes:
+    output: true       
+    permalink: /notes/:path/
+  talks:
+    output: true
+    permalink: /talks/:path/
+
+# 插件配置
 plugins:
-  - jemoji
+  - jekyll-emoji
+  - jekyll-feed

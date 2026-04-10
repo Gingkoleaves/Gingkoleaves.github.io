@@ -1,0 +1,19 @@
+<nav class="toolbar">
+  <div class="logo">Gingkoleaves</div>
+  <ul>
+    <li><a href="/">Homepage</a></li>
+    <li><a href="/notes">Notes</a></li>
+    <li><a href="/talks">Talks</a></li>
+  </ul>
+</nav>
+
+<style>
+.toolbar {
+  position: fixed; top: 0; width: 100%; height: 60px;
+  background: rgba(255,255,255,0.8); backdrop-filter: blur(10px);
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 50px; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.toolbar ul { display: flex; list-style: none; }
+.toolbar li { margin-left: 20px; }
+</style>
