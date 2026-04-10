@@ -1,5 +1,4 @@
 title: Gingkoleaves
-remote_theme: minitoc  
 future: true
 home_background_image: /assets/images/bg4.jpg
 
@@ -25,6 +24,9 @@ jekyll-archives:
     - categories
     - tags
     - year
+  collections:
+    - notes
+    - talks
   layouts:
     category: archive
     tag: archive
