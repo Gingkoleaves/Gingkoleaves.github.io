@@ -16,12 +16,15 @@ title: Talks
 </div>
 
 <style>
+:root { --entry-card-height: 12.5rem; }
+
 .talk-list { display: flex; flex-direction: column; gap: 16px; padding-top: 14px; }
 .talk-card { 
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
-  height: 12.5rem;
+  height: var(--entry-card-height);
   overflow: hidden;
   background: var(--card-bg); padding: 20px; border-left: 4px solid #007bff; 
   border-radius: 8px; border: 1px solid var(--card-border);

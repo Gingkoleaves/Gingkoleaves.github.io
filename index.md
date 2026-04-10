@@ -200,7 +200,18 @@ title: Home
     text-align: center;
     margin: 0;
     color: inherit;
-    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.18);
+    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.55);
+    paint-order: stroke fill;
+    text-shadow:
+      0 1px 2px rgba(0, 0, 0, 0.42),
+      0 0 18px rgba(0, 0, 0, 0.2);
+  }
+
+  body[data-theme="light"] h1 {
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.72);
+    text-shadow:
+      0 1px 2px rgba(255, 255, 255, 0.42),
+      0 0 12px rgba(255, 255, 255, 0.24);
   }
 
   .gh-stats {
