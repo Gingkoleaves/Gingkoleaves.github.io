@@ -305,6 +305,7 @@
     const statusMessage = document.getElementById("statusMessage");
     const defaultProfileTitle = profileTitle.textContent.trim();
     const defaultProfileSubtitle = profileSubtitle.textContent.trim();
+    const defaultDiaryDateText = "No date";
 
     function showStatus(message) {
       statusMessage.textContent = message;
@@ -360,7 +361,7 @@
         wrapper.className = "entry";
         wrapper.innerHTML = `
           <div class="entry-head">
-            <strong>${escapeHtml(entry.date || "No date")}</strong>
+            <strong>${escapeHtml(entry.date || defaultDiaryDateText)}</strong>
             <button type="button" class="ghost" data-index="${index}" data-action="delete">Delete</button>
           </div>
           <p class="entry-body" contenteditable="true" role="textbox" aria-label="Edit diary entry" aria-multiline="true" data-index="${index}">${escapeHtml(entry.text || "")}</p>
@@ -410,8 +411,6 @@
     }
 
     function resetAll() {
-      if (!confirm("Reset demo, profile, notes, and diary data?")) return;
-
       Object.values(storageKeys).forEach((key) => localStorage.removeItem(key));
       document.body.dataset.theme = "clean";
       document.body.dataset.layout = "classic";
@@ -425,7 +424,7 @@
     }
 
     function escapeHtml(text) {
-      return text
+      return String(text ?? "")
         .replaceAll("&", "&amp;")
         .replaceAll("<", "&lt;")
         .replaceAll(">", "&gt;")
