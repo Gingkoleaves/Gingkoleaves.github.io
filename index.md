@@ -30,36 +30,48 @@ title: Home
 </section>
 
 <style>
-/* 开启整页平滑滚动吸附 */
-html {
+/* --- 彻底消除外部干扰 --- */
+/* 强制让 Jekyll 主题的包装层铺满，不留白 */
+.wrapper, .container, main {
+  max-width: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100%;
+  overflow-x: hidden;
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
 }
 
-body {
-  margin: 0;
-  overflow-x: hidden;
-}
-
+/* --- 全屏容器设置 --- */
 .hero-section, .content-section {
+  width: 100vw;
   height: 100vh;
-  width: 100%;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
+  /* 如果有 Toolbar，某些浏览器 100vh 会导致溢出，可改用 100dvh */
+  height: 100dvh; 
+  display: flex;
+  position: relative;
+  overflow: hidden;
+  
+  /* 确保图片永远填满，不留死角 */
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  position: relative;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
 }
 
-/* 遮罩层：让背景图变暗，突出文字 */
+/* --- 覆盖层 --- */
 .overlay {
-  background: rgba(0, 0, 0, 0.4); 
   width: 100%;
   height: 100%;
+  background: rgba(0, 0, 0, 0.4); 
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -68,54 +80,16 @@ body {
   text-align: center;
 }
 
-h1 {
-  font-size: 3rem;
-  max-width: 80%;
-  text-shadow: 2px 2px 10px rgba(0,0,0,0.5);
-}
-
-.scroll-indicator {
-  position: absolute;
-  bottom: 30px;
-  animation: bounce 2s infinite;
-  font-size: 1.2rem;
-}
-
-/* 卡片样式：用于第二屏内容 */
+/* --- 内容微调 --- */
 .card {
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
   padding: 2rem;
   border-radius: 15px;
-  margin: 1rem;
+  margin: 10px;
   border: 1px solid rgba(255, 255, 255, 0.2);
-  width: 80%;
-  max-width: 600px;
-}
-
-.gh-stats {
-  max-width: 100%;
-  height: auto;
-}
-
-.tech-tags {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 10px;
-}
-
-.tag {
-  background: rgba(255, 255, 255, 0.2);
-  padding: 5px 15px;
-  border-radius: 20px;
-  font-size: 0.9rem;
-  border: 1px solid rgba(255,255,255,0.3);
-}
-
-@keyframes bounce {
-  0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
-  40% {transform: translateY(-10px);}
-  60% {transform: translateY(-5px);}
+  width: 85%;
+  max-width: 700px;
 }
 </style>
