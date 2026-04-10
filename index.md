@@ -3,9 +3,11 @@ layout: default
 title: Home
 ---
 
+{% assign home_background_image = site.home_background_image | default: '/assets/images/bg4.jpg' %}
+
 <section class="hero-screen">
   <div class="hero-backdrop" aria-hidden="true"></div>
-  <img class="hero-image" src="{{ "/assets/images/bg4.jpg" | relative_url }}" alt="Homepage background" />
+  <img class="hero-image" src="{{ home_background_image | relative_url }}" alt="Homepage background" />
   <div class="hero-overlay">
     <div class="hero-copy">
       <h1>Welcome to Gingkoleaves' personal homepage</h1>
@@ -28,10 +30,9 @@ title: Home
     <div class="card">
       <h2>Techniques</h2>
       <div class="tech-tags">
-        <span class="tag">Rust</span>
-        <span class="tag">RISC-V</span>
-        <span class="tag">Operating Systems</span>
-        <span class="tag">Database Design</span>
+        {% for technique in site.data.techniques %}
+        <span class="tag">{{ technique }}</span>
+        {% endfor %}
       </div>
     </div>
 
@@ -86,12 +87,12 @@ title: Home
   .hero-backdrop {
     position: absolute;
     inset: 0;
-    background-image: url('{{ "/assets/images/bg4.jpg" | relative_url }}');
+    background-image: url('{{ home_background_image | relative_url }}');
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
     filter: blur(42px) saturate(0.9) brightness(0.82);
-    transform: scale(1.18);
+    transform: scale(1.32);
     opacity: 0.95;
   }
 
@@ -124,13 +125,7 @@ title: Home
     flex-direction: column;
     align-items: center;
     gap: 18px;
-    padding: 2rem 2.5rem;
-    border-radius: 24px;
-    background: var(--surface-bg);
-    border: 1px solid var(--surface-border);
-    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+    padding: 0;
     text-align: center;
   }
 
@@ -153,7 +148,22 @@ title: Home
   }
 
   .content-screen {
-    background-color: var(--page-bg);
+    background-color: transparent;
+  }
+
+  .content-screen::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: url('{{ home_background_image | relative_url }}');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter: blur(42px) saturate(0.9) brightness(0.7);
+    transform: scale(1.18);
+    opacity: 0.35;
+    pointer-events: none;
+    z-index: 0;
   }
 
   .content-container {
@@ -162,7 +172,8 @@ title: Home
     align-items: center;
     width: 100%;
     --home-panel-width: min(85%, 800px);
-    z-index: 2;
+    position: relative;
+    z-index: 1;
   }
 
   .card {
