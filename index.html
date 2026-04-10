@@ -303,15 +303,17 @@
     const diaryText = document.getElementById("diaryText");
     const entriesContainer = document.getElementById("entries");
     const statusMessage = document.getElementById("statusMessage");
-    const defaultProfileTitle = "My Personal Homepage";
-    const defaultProfileSubtitle = "Click here to edit: notes manager + diary updates.";
+    const defaultProfileTitle = profileTitle.textContent.trim();
+    const defaultProfileSubtitle = profileSubtitle.textContent.trim();
 
     function showStatus(message) {
       statusMessage.textContent = message;
     }
 
     function getTodayDate() {
-      return new Date().toISOString().slice(0, 10);
+      const date = new Date();
+      date.setMinutes(date.getMinutes() - date.getTimezoneOffset());
+      return date.toISOString().slice(0, 10);
     }
 
     function applyDemo(theme, layout) {
@@ -415,7 +417,7 @@
       profileTitle.textContent = defaultProfileTitle;
       profileSubtitle.textContent = defaultProfileSubtitle;
       notesArea.value = "";
-      diaryDate.value = "";
+      diaryDate.value = getTodayDate();
       diaryText.value = "";
       showStatus("All local homepage data has been reset.");
       renderEntries();
