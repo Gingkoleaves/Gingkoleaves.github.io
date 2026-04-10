@@ -79,13 +79,16 @@ title: Home
     padding-top: 60px;
     box-sizing: border-box;
     background: var(--page-bg);
+    align-items: center;
   }
 
   .hero-image {
-    display: block;
-    width: min(82vw, 980px);
-    height: auto;
-    margin: 0 auto;
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center center;
   }
 
   .hero-overlay {
@@ -97,9 +100,8 @@ title: Home
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.1) 55%, transparent 100%);
     display: flex;
     flex-direction: column;
-    justify-content: flex-start;
+    justify-content: center;
     align-items: center;
-    padding-top: 24vh;
     color: var(--page-text);
   }
 
@@ -123,12 +125,14 @@ title: Home
     left: 0;
     right: 0;
     bottom: 0;
-    height: 46vh;
+    height: 58vh;
     background: linear-gradient(
       to bottom,
       rgba(18, 18, 18, 0) 0%,
-      rgba(18, 18, 18, 0.22) 34%,
-      rgba(18, 18, 18, 0.58) 68%,
+      rgba(18, 18, 18, 0.08) 20%,
+      rgba(18, 18, 18, 0.18) 40%,
+      rgba(18, 18, 18, 0.36) 62%,
+      rgba(18, 18, 18, 0.58) 82%,
       var(--page-bg) 100%
     );
     pointer-events: none;

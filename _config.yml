@@ -1,5 +1,6 @@
 title: Gingkoleaves
 remote_theme: minitoc  
+future: true
 
 collections:
   notes:
