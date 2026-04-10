@@ -45,6 +45,16 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
+        html,
+        body {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
         html.konami-on body {
             background: radial-gradient(circle at 20% 20%, rgba(77, 208, 255, 0.18), transparent 28%),
                         radial-gradient(circle at 80% 10%, rgba(255, 98, 196, 0.16), transparent 24%),
@@ -304,7 +314,7 @@ body[data-theme="dark"] .theme-toggle::after { content: "Night"; }
     
       <a href="/notes/Notes_4_Jekyll/" class="card">
         <h3>Trip to Jekyll</h3>
-        <p>Jekyll 作为一个基于 Ruby 的静态网站生成器，非常适合处理程序员的个人博客或项目文档（尤其是托管在 GitHub Pages 上时）。
+        <p>Jekyll !
 </p>
         <span class="date">2026-04-11</span>
       </a>
@@ -349,6 +359,11 @@ body[data-theme="dark"] .theme-toggle::after { content: "Night"; }
 }
 .card .date {
   margin-top: auto;
+}
+.card .date,
+.talk-card .meta {
+  font-size: 0.92rem;
+  color: var(--card-muted-text);
 }
 </style>
 

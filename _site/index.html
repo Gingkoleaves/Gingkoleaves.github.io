@@ -45,6 +45,16 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
+        html,
+        body {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
         html.konami-on body {
             background: radial-gradient(circle at 20% 20%, rgba(77, 208, 255, 0.18), transparent 28%),
                         radial-gradient(circle at 80% 10%, rgba(255, 98, 196, 0.16), transparent 24%),
@@ -319,7 +329,7 @@ body[data-theme="dark"] .theme-toggle::after { content: "Night"; }
     </div>
 
     <div class="card">
-      <h2>Techniques</h2>
+      <h2>Interests</h2>
       <div class="tech-tags">
         
         <span class="tag">Rust</span>
@@ -328,7 +338,9 @@ body[data-theme="dark"] .theme-toggle::after { content: "Night"; }
         
         <span class="tag">Operating Systems</span>
         
-        <span class="tag">Database Design</span>
+        <span class="tag">scRNA-seq</span>
+        
+        <span class="tag">Single-cell analysis</span>
         
       </div>
     </div>

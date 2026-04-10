@@ -45,6 +45,16 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
+        html,
+        body {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
         html.konami-on body {
             background: radial-gradient(circle at 20% 20%, rgba(77, 208, 255, 0.18), transparent 28%),
                         radial-gradient(circle at 80% 10%, rgba(255, 98, 196, 0.16), transparent 24%),

@@ -28,9 +28,9 @@ title: Home
     </div>
 
     <div class="card">
-      <h2>Techniques</h2>
+      <h2>Interests</h2>
       <div class="tech-tags">
-        {% for technique in site.data.techniques %}
+        {% for technique in site.data.Interests %}
         <span class="tag">{{ technique }}</span>
         {% endfor %}
       </div>
