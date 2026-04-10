@@ -3,11 +3,13 @@ layout: default
 title: Home
 ---
 
-<section class="hero-screen" style="background-image: url('{{ "/assets/images/bg1.jpg" | relative_url }}');">
+<section class="hero-screen">
+  <img class="hero-image" src="{{ "/assets/images/bg1.jpg" | relative_url }}" alt="Homepage background" />
   <div class="hero-overlay">
     <h1>Welcome to Gingkoleaves' personal homepage</h1>
     <div class="scroll-indicator">↓ Scroll Down</div>
   </div>
+  <div class="hero-fade"></div>
 </section>
 
 <section class="content-screen">
@@ -37,7 +39,7 @@ title: Home
 <style>
 /* 1. 彻底击碎 Jekyll 包装容器限制 */
 /* 这段代码必须存在，否则内容会被锁死在屏幕中间的小框里 */
-.wrapper, main, .container {
+.site-shell, .wrapper, main, .container {
   max-width: none !important;
   padding: 0 !important;
   margin: 0 !important;
@@ -48,45 +50,55 @@ html, body {
   margin: 0; padding: 0;
   width: 100%; height: 100%;
   overflow-x: hidden;
-  scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
-  background: #121212; /* 兜底深色 */
+  background: var(--page-bg);
+  color: var(--page-text);
 }
 
-/* 2. 定义全屏页面 */
+/* 2. 定义首屏和内容区 */
 .hero-screen, .content-screen {
-  width: 100vw;
-  height: 100vh;
-  height: 100dvh;
+  width: 100%;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
-  scroll-snap-align: start;
-  scroll-snap-stop: always;
   overflow: hidden;
 }
 
-/* 第一屏特有：背景图 */
 .hero-screen {
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
+  align-items: stretch;
+  background: var(--page-bg);
+}
+
+.hero-image {
+  display: block;
+  width: 100%;
+  height: auto;
 }
 
 .hero-overlay {
   position: absolute;
   top: 0; left: 0;
   width: 100%; height: 100%;
-  background: rgba(0, 0, 0, 0.4);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.1) 55%, transparent 100%);
   display: flex; flex-direction: column;
   justify-content: center; align-items: center;
   color: white;
 }
 
+.hero-fade {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 28vh;
+  background: linear-gradient(to bottom, rgba(18, 18, 18, 0) 0%, var(--page-bg) 100%);
+  pointer-events: none;
+}
+
 /* 第二屏特有：纯色内容区 */
 .content-screen {
-  background-color: #121212;
+  background-color: var(--page-bg);
 }
 
 .content-container {
@@ -99,16 +111,16 @@ html, body {
 
 /* 3. 卡片与字体样式 */
 .card {
-  background: rgba(255, 255, 255, 0.05);
+  background: var(--surface-bg);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   padding: 2rem;
   border-radius: 15px;
   margin: 15px 0;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--surface-border);
   width: 85%;
   max-width: 800px;
-  color: white;
+  color: var(--page-text);
   text-align: center;
 }
 
@@ -127,10 +139,10 @@ h1 { font-size: 3rem; text-align: center; }
 }
 
 .tag {
-  background: rgba(255, 255, 255, 0.1);
+  background: var(--surface-bg);
   padding: 8px 18px;
   border-radius: 20px;
-  border: 1px solid rgba(255,255,255,0.2);
+  border: 1px solid var(--surface-border);
 }
 
 .scroll-indicator {
