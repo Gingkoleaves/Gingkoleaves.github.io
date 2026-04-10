@@ -17,6 +17,8 @@
             --toolbar-bg: rgba(18, 18, 18, 0.78);
             --toolbar-text: #f5f5f5;
             --toolbar-border: rgba(255, 255, 255, 0.08);
+            --doc-bg: rgba(255, 255, 255, 0.9);
+            --doc-text: #1b1b1b;
         }
 
         body[data-theme="light"] {
@@ -32,6 +34,8 @@
             --toolbar-bg: rgba(255, 248, 240, 0.84);
             --toolbar-text: #1d1b16;
             --toolbar-border: rgba(29, 27, 22, 0.08);
+            --doc-bg: rgba(255, 255, 255, 0.92);
+            --doc-text: #1d1b16;
         }
 
         body {
@@ -74,29 +78,192 @@
         }
 
         html.konami-on body {
-            background: linear-gradient(120deg, #0b1020, #2b1055, #1b4332);
+            background: radial-gradient(circle at 20% 20%, rgba(77, 208, 255, 0.18), transparent 28%),
+                        radial-gradient(circle at 80% 10%, rgba(255, 98, 196, 0.16), transparent 24%),
+                        linear-gradient(120deg, #08111f, #22104d, #0f3a36);
             transition: background 600ms ease;
+            animation: konami-bg-drift 9s ease-in-out infinite alternate;
         }
 
-        html.konami-on a,
-        html.konami-on h1,
-        html.konami-on h2 {
-            text-shadow: 0 0 12px rgba(120, 200, 255, 0.35);
+        html.konami-on body,
+        html.konami-on body * {
+            text-shadow: 0 0 6px rgba(120, 200, 255, 0.24), 0 0 18px rgba(255, 107, 196, 0.16);
         }
 
-        html.konami-on .site-shell {
-            box-shadow: 0 0 45px rgba(120, 200, 255, 0.08);
+        html.konami-on .site-shell,
+        html.konami-on .toolbar,
+        html.konami-on .card,
+        html.konami-on .doc-panel,
+        html.konami-on .hero-copy {
+            box-shadow: 0 0 32px rgba(120, 200, 255, 0.12), 0 0 52px rgba(255, 107, 196, 0.08);
+        }
+
+        .konami-effects {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 9999;
+            mix-blend-mode: screen;
+        }
+
+        .konami-trail,
+        .konami-firework {
+            position: fixed;
+            pointer-events: none;
+            will-change: transform, opacity;
+            user-select: none;
+        }
+
+        .konami-trail {
+            width: 16px;
+            height: 16px;
+            margin-left: -8px;
+            margin-top: -8px;
+            border-radius: 999px;
+            background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(132, 219, 255, 0.92) 35%, rgba(132, 219, 255, 0) 72%);
+            box-shadow: 0 0 12px rgba(132, 219, 255, 0.95), 0 0 26px rgba(255, 107, 196, 0.55);
+            animation: konami-trail-fade 850ms ease-out forwards;
+        }
+
+        .konami-firework {
+            transform: translate(-50%, -50%) scale(0.8);
+            font-size: clamp(1.4rem, 2.8vw, 2.4rem);
+            filter: drop-shadow(0 0 16px rgba(255, 236, 156, 0.95)) drop-shadow(0 0 22px rgba(255, 107, 196, 0.72));
+            animation: konami-firework-burst 1500ms cubic-bezier(0.12, 0.72, 0.2, 1) forwards;
+        }
+
+        .konami-shake {
+            animation: konami-shake 680ms cubic-bezier(0.16, 0.84, 0.24, 1) both;
+            transform-origin: center center;
+            will-change: transform, filter;
+            filter: drop-shadow(0 0 14px rgba(132, 219, 255, 0.28)) drop-shadow(0 0 20px rgba(255, 107, 196, 0.18));
+        }
+
+        @keyframes konami-bg-drift {
+            from {
+                background-position: 0% 0%, 100% 0%, 0% 50%;
+            }
+
+            to {
+                background-position: 20% 10%, 80% 18%, 100% 55%;
+            }
+        }
+
+        @keyframes konami-trail-fade {
+            0% {
+                opacity: 0.95;
+                transform: translate(var(--x, 0), var(--y, 0)) scale(0.5);
+            }
+
+            70% {
+                opacity: 0.85;
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(var(--x, 0), var(--y, 0)) scale(1.8);
+            }
+        }
+
+        @keyframes konami-firework-burst {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5) rotate(-18deg);
+                filter: blur(0px) drop-shadow(0 0 4px rgba(255, 236, 156, 0.6));
+            }
+
+            18% {
+                opacity: 1;
+            }
+
+            55% {
+                opacity: 1;
+                transform: translate(calc(-50% + var(--dx, 0px)), calc(-50% + var(--dy, 0px))) scale(1.2) rotate(10deg);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(calc(-50% + var(--dx, 0px)), calc(-50% + var(--dy, 0px))) scale(1.8) rotate(28deg);
+                filter: blur(0.4px) drop-shadow(0 0 2px rgba(255, 236, 156, 0.15));
+            }
+        }
+
+        @keyframes konami-shake {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+
+            8% {
+                transform: translate(calc(var(--shake-x, 1px) * -1), var(--shake-y, 1px)) rotate(calc(var(--shake-rot, 1deg) * -1)) scale(1.01);
+            }
+
+            16% {
+                transform: translate(var(--shake-x, 1px), calc(var(--shake-y, 1px) * -1)) rotate(var(--shake-rot, 1deg)) scale(1.015);
+            }
+
+            24% {
+                transform: translate(calc(var(--shake-x, 1px) * -1.5), var(--shake-y, 1px)) rotate(calc(var(--shake-rot, 1deg) * 1.15)) scale(1.01);
+            }
+
+            36% {
+                transform: translate(var(--shake-x, 1px), calc(var(--shake-y, 1px) * -1.2)) rotate(calc(var(--shake-rot, 1deg) * -1.2)) scale(1.02);
+            }
+
+            48% {
+                transform: translate(calc(var(--shake-x, 1px) * -0.8), var(--shake-y, 1px)) rotate(calc(var(--shake-rot, 1deg) * 0.7)) scale(1.01);
+            }
+
+            62% {
+                transform: translate(var(--shake-x, 1px), calc(var(--shake-y, 1px) * -0.9)) rotate(calc(var(--shake-rot, 1deg) * -0.55)) scale(1.015);
+            }
+
+            78% {
+                transform: translate(calc(var(--shake-x, 1px) * -0.5), var(--shake-y, 1px)) rotate(calc(var(--shake-rot, 1deg) * 0.4)) scale(1.005);
+            }
+
+            100% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
         }
 
         .site-shell { max-width: 800px; margin: 0 auto; padding: calc(60px + 2rem) 2em 2em; }
+        .doc-panel {
+            background: var(--doc-bg);
+            color: var(--doc-text);
+            border-radius: 14px;
+            padding: 1.2rem 1.4rem;
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            box-sizing: border-box;
+        }
+
+        .doc-panel a {
+            color: #1b4a8f;
+        }
+
+        .doc-panel :first-child {
+            margin-top: 0;
+        }
+
+        .doc-panel :last-child {
+            margin-bottom: 0;
+        }
+
         header { border-bottom: 1px solid var(--surface-border); margin-bottom: 20px; }
         .emoji { height: 1.2em; } /* restrict size */
     </style>
 </head>
 <body data-theme="dark">
     {% include toolbar.html %}
+    <div class="konami-effects" id="konami-effects" aria-hidden="true"></div>
     <div class="site-shell">
+        {% if page.collection == "notes" or page.collection == "talks" %}
+        <article class="doc-panel">
+            {{ content }}
+        </article>
+        {% else %}
         {{ content }}
+        {% endif %}
 
         <footer>
             <p>© 2026 {{ site.title }}</p>

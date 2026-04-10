@@ -17,7 +17,7 @@ title: Notes
 </div>
 
 <style>
-.card-list { display: flex; flex-direction: column; gap: 20px; padding-top: 80px; }
+.card-list { display: flex; flex-direction: column; gap: 16px; padding-top: 14px; }
 .card { 
   background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; 
   padding: 20px; text-decoration: none; color: var(--card-text); transition: 0.3s;

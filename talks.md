@@ -16,7 +16,7 @@ title: Talks
 </div>
 
 <style>
-.talk-list { display: flex; flex-direction: column; gap: 20px; padding-top: 80px; }
+.talk-list { display: flex; flex-direction: column; gap: 16px; padding-top: 14px; }
 .talk-card { 
   display: block;
   background: var(--card-bg); padding: 20px; border-left: 4px solid #007bff; 

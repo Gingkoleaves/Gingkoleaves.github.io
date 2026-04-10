@@ -15,15 +15,47 @@
       data-reactions-enabled="1"
       data-emit-metadata="0"
       data-input-position="bottom"
-      data-theme="preferred_color_scheme"
+      data-theme="dark_dimmed"
       data-lang="zh-CN"
       crossorigin="anonymous"
       async>
     </script>
   </div>
-
-  <div class="comments-fallback">
-    <p>如遇加载问题，可直接前往 Discussions：</p>
-    <a class="comments-link" href="https://github.com/Gingkoleaves/Gingkoleaves.github.io/discussions" target="_blank" rel="noreferrer">打开 Discussions</a>
-  </div>
 </section>
+
+<script>
+(function () {
+  function resolveGiscusTheme(theme) {
+    return theme === 'light' ? 'light' : 'dark_dimmed';
+  }
+
+  function syncGiscusTheme(theme) {
+    const frame = document.querySelector('iframe.giscus-frame');
+    if (!frame) {
+      return;
+    }
+
+    frame.contentWindow.postMessage(
+      {
+        giscus: {
+          setConfig: {
+            theme: resolveGiscusTheme(theme)
+          }
+        }
+      },
+      'https://giscus.app'
+    );
+  }
+
+  const currentTheme = document.body.dataset.theme || 'dark';
+  syncGiscusTheme(currentTheme);
+
+  window.addEventListener('load', function () {
+    syncGiscusTheme(document.body.dataset.theme || 'dark');
+  });
+
+  document.addEventListener('site-theme-change', function (event) {
+    syncGiscusTheme(event.detail && event.detail.theme ? event.detail.theme : 'dark');
+  });
+})();
+</script>

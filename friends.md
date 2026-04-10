@@ -6,7 +6,7 @@ permalink: /friends/
 
 <div class="friends-page">
   <h2>友链</h2>
-  <p class="friends-intro">这里放你想展示的朋友站点链接。现在先留一个页面入口，后续可以直接在这里补充。</p>
+  <p class="friends-intro">大佬</p>
 
   <div class="friends-list">
     <a class="friend-card" href="https://github.com/" target="_blank" rel="noreferrer">

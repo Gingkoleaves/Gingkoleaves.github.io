@@ -4,6 +4,7 @@ title: Home
 ---
 
 <section class="hero-screen">
+  <div class="hero-backdrop" aria-hidden="true"></div>
   <img class="hero-image" src="{{ "/assets/images/bg1.jpg" | relative_url }}" alt="Homepage background" />
   <div class="hero-overlay">
     <div class="hero-copy">
@@ -19,9 +20,9 @@ title: Home
     <div class="card">
       <h2>GitHub Contributions</h2>
       <img class="gh-stats"
-           src="https://ghchart.rshah.org/409ba5/Gingkoleaves"
+         src="https://ghchart.rshah.org/40c463/Gingkoleaves"
            alt="Gingkoleaves' GitHub Chart" />
-      <p style="font-size: 0.8rem; color: #409ba5; margin-top: 10px;">最近一年的代码提交分布</p>
+       <p style="font-size: 0.8rem; color: #40c463; margin-top: 10px;">最近一年的代码提交分布</p>
     </div>
 
     <div class="card">
@@ -82,13 +83,25 @@ title: Home
     align-items: center;
   }
 
-  .hero-image {
+  .hero-backdrop {
     position: absolute;
     inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center center;
+    background-image: url('{{ "/assets/images/bg1.jpg" | relative_url }}');
+    background-position: center center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    filter: blur(42px) saturate(0.9) brightness(0.82);
+    transform: scale(1.18);
+    opacity: 0.95;
+  }
+
+  .hero-image {
+    position: relative;
+    z-index: 1;
+    display: block;
+    width: min(82vw, 980px);
+    height: auto;
+    margin: 0 auto;
   }
 
   .hero-overlay {
@@ -97,12 +110,13 @@ title: Home
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.1) 55%, transparent 100%);
+    background: linear-gradient(to bottom, rgba(0, 0, 0, 0.28) 0%, rgba(0, 0, 0, 0.08) 58%, transparent 100%);
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     color: var(--page-text);
+    z-index: 2;
   }
 
   .hero-copy {
@@ -125,14 +139,14 @@ title: Home
     left: 0;
     right: 0;
     bottom: 0;
-    height: 58vh;
+    height: 44vh;
     background: linear-gradient(
       to bottom,
       rgba(18, 18, 18, 0) 0%,
-      rgba(18, 18, 18, 0.08) 20%,
-      rgba(18, 18, 18, 0.18) 40%,
-      rgba(18, 18, 18, 0.36) 62%,
-      rgba(18, 18, 18, 0.58) 82%,
+      rgba(18, 18, 18, 0.04) 18%,
+      rgba(18, 18, 18, 0.12) 40%,
+      rgba(18, 18, 18, 0.28) 68%,
+      rgba(18, 18, 18, 0.52) 88%,
       var(--page-bg) 100%
     );
     pointer-events: none;
@@ -201,7 +215,6 @@ title: Home
 
   .comments-section {
     width: 100%;
-    box-sizing: border-box;
     background: var(--surface-bg);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
