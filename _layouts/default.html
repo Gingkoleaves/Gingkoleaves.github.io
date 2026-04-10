@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>{{ page.title }} - {{ site.title }}</title>
+    <style>
+        body { font-family: sans-serif; line-height: 1.6; max-width: 800px; margin: 0 auto; padding: 2em; }
+        header { border-bottom: 1px solid #eee; margin-bottom: 20px; }
+        .emoji { height: 1.2em; } /* restrict size */
+    </style>
+</head>
+<body>
+    <header>
+        <h1>{{ site.title }}</h1>
+        <nav><a href="/">Homepage</a></nav>
+    </header>
+
+    {{ content }}
+
+    <footer>
+        <p>© 2026 {{ site.title }}</p>
+    </footer>
+</body>
+</html>

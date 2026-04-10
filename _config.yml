@@ -1,3 +1,9 @@
-theme: jekyll-theme-minimal
-title: Gingkoleaves' homepage
-description: My homepage!
+title: My homepage
+email: 2350998@tongji.edu.cn
+description: Everyday homepage
+baseurl: "" 
+url: "gingkoleaves.github.io"
+
+# activate emoji
+plugins:
+  - jekyll-emoji
