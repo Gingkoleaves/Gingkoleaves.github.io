@@ -303,9 +303,15 @@
     const diaryText = document.getElementById("diaryText");
     const entriesContainer = document.getElementById("entries");
     const statusMessage = document.getElementById("statusMessage");
+    const defaultProfileTitle = "My Personal Homepage";
+    const defaultProfileSubtitle = "Click here to edit: notes manager + diary updates.";
 
     function showStatus(message) {
       statusMessage.textContent = message;
+    }
+
+    function getTodayDate() {
+      return new Date().toISOString().slice(0, 10);
     }
 
     function applyDemo(theme, layout) {
@@ -315,8 +321,8 @@
     }
 
     function saveProfile() {
-      localStorage.setItem(storageKeys.profileTitle, profileTitle.textContent.trim() || "My Personal Homepage");
-      localStorage.setItem(storageKeys.profileSubtitle, profileSubtitle.textContent.trim() || "Click here to edit: notes manager + diary updates.");
+      localStorage.setItem(storageKeys.profileTitle, profileTitle.textContent.trim() || defaultProfileTitle);
+      localStorage.setItem(storageKeys.profileSubtitle, profileSubtitle.textContent.trim() || defaultProfileSubtitle);
     }
 
     function saveNotes() {
@@ -326,7 +332,7 @@
 
     function clearNotes() {
       notesArea.value = "";
-      localStorage.setItem(storageKeys.notes, "");
+      localStorage.removeItem(storageKeys.notes);
     }
 
     function loadEntries() {
@@ -369,7 +375,7 @@
 
       const entries = loadEntries();
       entries.unshift({
-        date: diaryDate.value || new Date().toISOString().slice(0, 10),
+        date: diaryDate.value || getTodayDate(),
         text
       });
 
@@ -406,8 +412,8 @@
       Object.values(storageKeys).forEach((key) => localStorage.removeItem(key));
       document.body.dataset.theme = "clean";
       document.body.dataset.layout = "classic";
-      profileTitle.textContent = "My Personal Homepage";
-      profileSubtitle.textContent = "Click here to edit: notes manager + diary updates.";
+      profileTitle.textContent = defaultProfileTitle;
+      profileSubtitle.textContent = defaultProfileSubtitle;
       notesArea.value = "";
       diaryDate.value = "";
       diaryText.value = "";
@@ -435,7 +441,7 @@
       profileTitle.textContent = localStorage.getItem(storageKeys.profileTitle) || profileTitle.textContent;
       profileSubtitle.textContent = localStorage.getItem(storageKeys.profileSubtitle) || profileSubtitle.textContent;
       notesArea.value = localStorage.getItem(storageKeys.notes) || "";
-      diaryDate.value = new Date().toISOString().slice(0, 10);
+      diaryDate.value = getTodayDate();
       renderEntries();
     }
 
