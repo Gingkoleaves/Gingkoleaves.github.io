@@ -73,6 +73,21 @@
             background: transparent;
         }
 
+        html.konami-on body {
+            background: linear-gradient(120deg, #0b1020, #2b1055, #1b4332);
+            transition: background 600ms ease;
+        }
+
+        html.konami-on a,
+        html.konami-on h1,
+        html.konami-on h2 {
+            text-shadow: 0 0 12px rgba(120, 200, 255, 0.35);
+        }
+
+        html.konami-on .site-shell {
+            box-shadow: 0 0 45px rgba(120, 200, 255, 0.08);
+        }
+
         .site-shell { max-width: 800px; margin: 0 auto; padding: calc(60px + 2rem) 2em 2em; }
         header { border-bottom: 1px solid var(--surface-border); margin-bottom: 20px; }
         .emoji { height: 1.2em; } /* restrict size */
@@ -87,5 +102,6 @@
             <p>© 2026 {{ site.title }}</p>
         </footer>
     </div>
+    <script src="{{ "/assets/js/konami.js" | relative_url }}" defer></script>
 </body>
 </html>

@@ -7,7 +7,7 @@ title: Notes
   <h2>Notes :book:</h2>
   <div class="card-list">
     {% for note in site.notes %}
-      <a href="{{ note.url }}" class="card">
+      <a href="{{ note.permalink }}" class="card">
         <h3>{{ note.title }}</h3>
         <p>{{ note.excerpt | strip_html | truncate: 100 }}</p>
         <span class="date">{{ note.date | date: "%Y-%m-%d" }}</span>
