@@ -8,7 +8,6 @@ title: Home
   <div class="hero-overlay">
     <div class="hero-copy">
       <h1>Welcome to Gingkoleaves' personal homepage</h1>
-      <div class="scroll-indicator">↓ Scroll Down</div>
     </div>
   </div>
   <div class="hero-fade"></div>
@@ -97,8 +96,10 @@ title: Home
     height: 100%;
     background: linear-gradient(to bottom, rgba(0, 0, 0, 0.35) 0%, rgba(0, 0, 0, 0.1) 55%, transparent 100%);
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
+    padding-top: 24vh;
     color: var(--page-text);
   }
 
@@ -122,8 +123,14 @@ title: Home
     left: 0;
     right: 0;
     bottom: 0;
-    height: 34vh;
-    background: linear-gradient(to bottom, rgba(18, 18, 18, 0) 0%, var(--page-bg) 100%);
+    height: 46vh;
+    background: linear-gradient(
+      to bottom,
+      rgba(18, 18, 18, 0) 0%,
+      rgba(18, 18, 18, 0.22) 34%,
+      rgba(18, 18, 18, 0.58) 68%,
+      var(--page-bg) 100%
+    );
     pointer-events: none;
   }
 
@@ -185,10 +192,12 @@ title: Home
   .comments-wrap {
     width: 85%;
     max-width: 800px;
-    margin: 15px 0 60px;
+    margin: 15px auto 60px;
   }
 
   .comments-section {
+    width: 100%;
+    box-sizing: border-box;
     background: var(--surface-bg);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
@@ -205,6 +214,47 @@ title: Home
   .comments-header p {
     margin-top: 0;
     color: var(--muted-text);
+  }
+
+  .comments-fallback {
+    display: grid;
+    gap: 12px;
+    justify-items: start;
+    text-align: left;
+  }
+
+  .comments-link {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.85rem 1.2rem;
+    border-radius: 999px;
+    border: 1px solid var(--surface-border);
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--page-text);
+    text-decoration: none;
+    font-weight: 600;
+    transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+  }
+
+  .comments-link:hover {
+    transform: translateY(-1px);
+    border-color: rgba(255, 255, 255, 0.24);
+    background: rgba(255, 255, 255, 0.12);
+  }
+
+  body[data-theme="light"] .comments-link {
+    background: rgba(255, 255, 255, 0.78);
+  }
+
+  body[data-theme="light"] .comments-link:hover {
+    background: rgba(255, 255, 255, 0.92);
+  }
+
+  .comments-note {
+    margin: 0;
+    color: var(--muted-text);
+    font-size: 0.92rem;
   }
 
   .scroll-indicator {

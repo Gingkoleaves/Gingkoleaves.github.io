@@ -1,24 +1,12 @@
 <section class="comments-section" aria-labelledby="comments-title">
   <div class="comments-header">
     <h2 id="comments-title">留言板</h2>
-    <p>欢迎留下想法、建议或一句问候。</p>
+    <p>这里先提供 Discussions 留言入口。等你安装 giscus App 后，可以再切回内嵌评论区。</p>
   </div>
 
-  <div class="comments">
-    <script src="https://giscus.app/client.js"
-      data-repo="Gingkoleaves/Gingkoleaves.github.io"
-      data-repo-id="R_kgDOR_N8tA"
-      data-category="General"
-      data-category-id="DIC_kwDOR_N8tM4C6jI_"
-      data-mapping="pathname"
-      data-strict="0"
-      data-reactions-enabled="1"
-      data-emit-metadata="0"
-      data-input-position="bottom"
-      data-theme="preferred_color_scheme"
-      data-lang="zh-CN"
-      crossorigin="anonymous"
-      async>
-    </script>
+  <div class="comments-fallback">
+    <p>如果你想直接留言，请前往 GitHub Discussions。</p>
+    <a class="comments-link" href="https://github.com/Gingkoleaves/Gingkoleaves.github.io/discussions" target="_blank" rel="noreferrer">打开 Discussions</a>
+    <p class="comments-note">当前仓库已开启 Discussions，但 giscus App 尚未安装，所以不加载嵌入脚本以避免报错。</p>
   </div>
 </section>
