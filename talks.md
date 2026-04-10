@@ -43,5 +43,9 @@ title: Talks
   overflow: hidden;
 }
 .talk-card .content p:last-child { margin-bottom: 0; }
-.meta { margin-top: auto; }
+.meta {
+  margin-top: auto;
+  font-size: 0.92rem;
+  color: var(--card-muted-text);
+}
 </style>
