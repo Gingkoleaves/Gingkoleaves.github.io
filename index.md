@@ -30,8 +30,8 @@ title: Home
     <div class="card">
       <h2>Interests</h2>
       <div class="tech-tags">
-        {% for technique in site.data.Interests %}
-        <span class="tag">{{ technique }}</span>
+        {% for Interests in site.data.Interests %}
+        <span class="tag">{{ Interests }}</span>
         {% endfor %}
       </div>
     </div>
