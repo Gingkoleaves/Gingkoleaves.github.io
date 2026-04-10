@@ -2,6 +2,7 @@
   <div class="logo">Gingkoleaves</div>
   <ul>
     <li><a href="/">Homepage</a></li>
+    <li><a href="/gallery/" {% if page.url == '/gallery/' %}aria-current="page"{% endif %}>Gallery</a></li>
     <li><a href="/notes">Notes</a></li>
     <li><a href="/talks">Talks</a></li>
     <li><a href="/friends/">友链</a></li>
@@ -23,6 +24,7 @@
 .toolbar li { margin-left: 20px; }
 .toolbar a, .theme-toggle { color: inherit; }
 .toolbar a { text-decoration: none; }
+.toolbar a[aria-current="page"] { font-weight: 700; text-decoration: underline; text-underline-offset: 0.25em; }
 .theme-toggle {
   border: 1px solid currentColor;
   background: transparent;

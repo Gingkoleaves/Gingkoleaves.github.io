@@ -5,7 +5,7 @@ title: Home
 
 <section class="hero-screen">
   <div class="hero-backdrop" aria-hidden="true"></div>
-  <img class="hero-image" src="{{ "/assets/images/bg1.jpg" | relative_url }}" alt="Homepage background" />
+  <img class="hero-image" src="{{ "/assets/images/bg4.jpg" | relative_url }}" alt="Homepage background" />
   <div class="hero-overlay">
     <div class="hero-copy">
       <h1>Welcome to Gingkoleaves' personal homepage</h1>
@@ -161,6 +161,7 @@ title: Home
     flex-direction: column;
     align-items: center;
     width: 100%;
+    --home-panel-width: min(85%, 800px);
     z-index: 2;
   }
 
@@ -168,12 +169,12 @@ title: Home
     background: var(--surface-bg);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    box-sizing: border-box;
     padding: 2rem;
     border-radius: 15px;
     margin: 15px 0;
     border: 1px solid var(--surface-border);
-    width: 85%;
-    max-width: 800px;
+    width: var(--home-panel-width);
     color: var(--page-text);
     text-align: center;
   }
@@ -208,12 +209,13 @@ title: Home
   }
 
   .comments-wrap {
-    width: 85%;
-    max-width: 800px;
-    margin: 15px auto 60px;
+    box-sizing: border-box;
+    width: var(--home-panel-width);
+    margin: 15px 0 60px;
   }
 
   .comments-section {
+    box-sizing: border-box;
     width: 100%;
     background: var(--surface-bg);
     backdrop-filter: blur(10px);
