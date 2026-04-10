@@ -6,4 +6,4 @@ url: "gingkoleaves.github.io"
 
 # activate emoji
 plugins:
-  - jekyll-emoji
+  - jemoji
