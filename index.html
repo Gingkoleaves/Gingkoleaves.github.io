@@ -229,8 +229,8 @@
 <body data-theme="clean" data-layout="classic">
   <div class="container">
     <header class="card">
-      <h1 id="profileTitle" class="title" contenteditable="true" role="textbox" aria-label="Editable page title" aria-multiline="false">My Personal Homepage</h1>
-      <p id="profileSubtitle" class="subtitle" contenteditable="true" role="textbox" aria-label="Editable page subtitle" aria-multiline="false">Click here to edit: notes manager + diary updates.</p>
+      <h1 id="profileTitle" class="title" contenteditable="true" aria-label="Editable page title">My Personal Homepage</h1>
+      <p id="profileSubtitle" class="subtitle" contenteditable="true" aria-label="Editable page subtitle">Click here to edit: notes manager + diary updates.</p>
       <p class="hint">Tip: title/subtitle, notes, and diary entries are all editable and saved in your browser.</p>
     </header>
 
@@ -353,7 +353,10 @@
       entriesContainer.innerHTML = "";
 
       if (!entries.length) {
-        entriesContainer.innerHTML = '<p class="hint">No diary entries yet.</p>';
+        const emptyText = document.createElement("p");
+        emptyText.className = "hint";
+        emptyText.textContent = "No diary entries yet.";
+        entriesContainer.appendChild(emptyText);
         return;
       }
 
