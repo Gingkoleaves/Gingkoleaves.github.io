@@ -35,4 +35,6 @@ Then open the local address shown in the terminal, usually `http://127.0.0.1:400
 
 ## Notes
 
-The homepage includes a small hidden easter egg, so try a familiar keyboard sequence while browsing.
+The homepage includes a hidden easter egg: enter the Konami code on the homepage, and a special visual effect will appear.
+
+Sequence: `Up, Up, Down, Down, Left, Right, Left, Right, B, A`
