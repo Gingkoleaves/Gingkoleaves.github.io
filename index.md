@@ -14,9 +14,13 @@ title: Home
   <div class="overlay">
     <div class="card">
       <h2>GitHub Profile</h2>
-      <img class="gh-stats" src="https://github-readme-stats.vercel.app/api?username=Gingkoleaves&show_icons=true&theme=transparent" alt="GitHub Stats" />
-    </div>
-    
+      <div class="card">
+        <h2>GitHub Contributions</h2>
+        <img class="gh-stats" 
+            src="https://ghchart.rshah.org/409ba5/Gingkoleaves" 
+            alt="Gingkoleaves' GitHub Chart" />
+        <p style="font-size: 0.8rem; color: #216e39; margin-top: 10px;">最近一年的代码提交分布</p>
+      </div>
     <div class="card">
       <h2>Techniques</h2>
       <div class="tech-tags">
