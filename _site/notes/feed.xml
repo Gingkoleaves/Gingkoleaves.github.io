@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="/notes/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2026-04-10T19:26:40+00:00</updated><id>/notes/feed.xml</id><title type="html">Gingkoleaves | Notes</title><entry><title type="html">Trip to Jekyll</title><link href="/notes/Notes_4_Jekyll/" rel="alternate" type="text/html" title="Trip to Jekyll" /><published>2026-04-11T00:00:00+00:00</published><updated>2026-04-11T00:00:00+00:00</updated><id>/notes/Notes_4_Jekyll</id><content type="html" xml:base="/notes/Notes_4_Jekyll/"><![CDATA[<p>Jekyll 作为一个基于 Ruby 的静态网站生成器，非常适合处理程序员的个人博客或项目文档（尤其是托管在 GitHub Pages 上时）。</p>
+
+<hr />
+
+<h3 id="1-核心目录结构回顾">1. 核心目录结构回顾</h3>
+<p>在 <code class="language-plaintext highlighter-rouge">_config.yml</code> 之外，这几个目录是 Jekyll 的灵魂：</p>
+<ul>
+  <li><strong><code class="language-plaintext highlighter-rouge">_includes/</code></strong>：存放可重用的代码片段（如 <code class="language-plaintext highlighter-rouge">footer.html</code>, <code class="language-plaintext highlighter-rouge">navigation.html</code>）。使用 <code class="language-plaintext highlighter-rouge">{% include filename.html %}</code> 引入。</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">_layouts/</code></strong>：定义页面的模板。你 YAML 头部的 <code class="language-plaintext highlighter-rouge">layout: default</code> 就是在这里找 <code class="language-plaintext highlighter-rouge">default.html</code>。</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">_sass/</code></strong>：存放分模块的样式文件，方便管理复杂的 CSS。</li>
+  <li><strong><code class="language-plaintext highlighter-rouge">_data/</code></strong>：存放 YAML 或 JSON 数据。比如你可以写个 <code class="language-plaintext highlighter-rouge">members.yml</code>，然后用 <code class="language-plaintext highlighter-rouge">site.data.members</code> 在页面上循环渲染。</li>
+</ul>
+
+<hr />
+
+<h3 id="2-liquid-常用语法-补充">2. Liquid 常用语法 (补充)</h3>
+<p>Liquid 是 Jekyll 的模板引擎，掌握这三类语法至关重要：</p>
+
+<ul>
+  <li><strong>对象 (Objects)</strong>：用 <code class="language-plaintext highlighter-rouge">{{ }}</code> 包裹，输出内容。
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">{{ page.title }}</code>：当前页面的标题。</li>
+      <li><code class="language-plaintext highlighter-rouge">{{ site.time | date: "%Y-%B-%d" }}</code>：格式化输出当前时间。</li>
+    </ul>
+  </li>
+  <li><strong>标记 (Tags)</strong>：用 <code class="language-plaintext highlighter-rouge">{% %}</code> 包裹，用于逻辑控制。
+    <ul>
+      <li><strong>条件判断</strong>：<code class="language-plaintext highlighter-rouge">{% if page.tags contains 'jekyll' %} ... {% endif %}</code></li>
+      <li><strong>循环</strong>：<code class="language-plaintext highlighter-rouge">{% for post in site.posts limit:5 %} ... {% endfor %}</code></li>
+    </ul>
+  </li>
+  <li><strong>过滤器 (Filters)</strong>：通过管道符 <code class="language-plaintext highlighter-rouge">|</code> 修改输出。
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">{{ "hello world" | upcase }}</code> $\rightarrow$ <strong>HELLO WORLD</strong></li>
+      <li><code class="language-plaintext highlighter-rouge">{{ content | strip_html | truncatewords: 20 }}</code>：生成文章摘要。</li>
+    </ul>
+  </li>
+</ul>
+
+<hr />
+
+<h3 id="3-本地调试与配置优化">3. 本地调试与配置优化</h3>
+<p>在开发阶段，这两个技巧能显著提升效率：</p>
+
+<ul>
+  <li><strong>排除不必要文件</strong>：
+  在 <code class="language-plaintext highlighter-rouge">_config.yml</code> 中使用 <code class="language-plaintext highlighter-rouge">exclude</code> 避免编译 <code class="language-plaintext highlighter-rouge">node_modules</code> 或 <code class="language-plaintext highlighter-rouge">README.md</code>：
+    <div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="na">exclude</span><span class="pi">:</span>
+    <span class="pi">-</span> <span class="s">Gemfile</span>
+    <span class="pi">-</span> <span class="s">Gemfile.lock</span>
+    <span class="pi">-</span> <span class="s">node_modules/</span>
+    <span class="pi">-</span> <span class="s">vendor/</span>
+</code></pre></div>    </div>
+  </li>
+  <li><strong>草稿功能 (Drafts)</strong>：
+  创建 <code class="language-plaintext highlighter-rouge">_drafts/</code> 文件夹。运行 <code class="language-plaintext highlighter-rouge">bundle exec jekyll serve --drafts</code> 时，草稿会被编译，但在正式部署（没有该 flag）时不会显示。</li>
+</ul>
+
+<hr />
+
+<h3 id="4-静态资源处理">4. 静态资源处理</h3>
+<ul>
+  <li><strong>Baseurl 的坑</strong>：
+  如果你的网站不是托管在域名根目录（例如 <code class="language-plaintext highlighter-rouge">username.github.io/my-blog/</code>），在引用图片或 CSS 时，务必加上 <code class="language-plaintext highlighter-rouge">relative_url</code> 过滤器：
+  <code class="language-plaintext highlighter-rouge">&lt;link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}"&gt;</code></li>
+  <li><strong>Assets 结构</strong>：
+  建议采用标准路径：<code class="language-plaintext highlighter-rouge">/assets/images/</code>, <code class="language-plaintext highlighter-rouge">/assets/css/</code>, <code class="language-plaintext highlighter-rouge">/assets/js/</code>。</li>
+</ul>
+
+<hr />
+
+<h3 id="5-常用插件推荐">5. 常用插件推荐</h3>
+<p>如果你是手动配置环境，可以在 <code class="language-plaintext highlighter-rouge">Gemfile</code> 中添加：</p>
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">jekyll-sitemap</code>：自动生成站点地图，利于 SEO。</li>
+  <li><code class="language-plaintext highlighter-rouge">jekyll-feed</code>：生成 RSS 订阅。</li>
+  <li><code class="language-plaintext highlighter-rouge">jekyll-paginate</code>：文章列表分页。</li>
+  <li><code class="language-plaintext highlighter-rouge">jekyll-gist</code>：方便嵌入 GitHub Gist 代码块。</li>
+</ul>
+
+<hr />]]></content><author><name></name></author><category term="notes" /><category term="jekyll" /><category term="setup" /><category term="static-site" /><summary type="html"><![CDATA[Jekyll 作为一个基于 Ruby 的静态网站生成器，非常适合处理程序员的个人博客或项目文档（尤其是托管在 GitHub Pages 上时）。]]></summary></entry></feed>

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?><feed xmlns="http://www.w3.org/2005/Atom" ><generator uri="https://jekyllrb.com/" version="4.4.1">Jekyll</generator><link href="/talks/feed.xml" rel="self" type="application/atom+xml" /><link href="/" rel="alternate" type="text/html" /><updated>2026-04-10T19:26:40+00:00</updated><id>/talks/feed.xml</id><title type="html">Gingkoleaves | Talks</title><entry><title type="html">Trip to Jekyll</title><link href="/talks/2026-4-11-init/" rel="alternate" type="text/html" title="Trip to Jekyll" /><published>2026-04-11T00:00:00+00:00</published><updated>2026-04-11T00:00:00+00:00</updated><id>/talks/init</id><content type="html" xml:base="/talks/2026-4-11-init/"><![CDATA[<h3 id="hello-world">Hello World!</h3>
+
+<p>这是我的第一篇 Jekyll 博客。我发现使用静态网站生成器非常高效 :rocket:。</p>
+
+<p>目前我正在研究：</p>
+<ol>
+  <li><strong>rCore-Tutorial</strong>: 探索 RISC-V 上的 OS 实现。</li>
+  <li><strong>MIPS CPU</strong>: 优化指令集流水线。</li>
+</ol>
+
+<p>代码块测试：</p>
+
+<div class="language-rust highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">fn</span> <span class="nf">main</span><span class="p">()</span> <span class="p">{</span>
+    <span class="nd">println!</span><span class="p">(</span><span class="s">"Hello, OS kernel!"</span><span class="p">);</span>
+<span class="p">}</span>
+</code></pre></div></div>]]></content><author><name></name></author><category term="talks" /><category term="jekyll" /><category term="os" /><category term="risc-v" /><summary type="html"><![CDATA[Hello World!]]></summary></entry></feed>

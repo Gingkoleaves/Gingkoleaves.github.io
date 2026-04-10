@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Talks - Gingkoleaves</title>
+    <style>
+        :root {
+            --page-bg: #121212;
+            --page-text: #f5f5f5;
+            --surface-bg: rgba(255, 255, 255, 0.06);
+            --surface-border: rgba(255, 255, 255, 0.12);
+            --muted-text: rgba(245, 245, 245, 0.72);
+            --card-bg: rgba(255, 255, 255, 0.08);
+            --card-border: rgba(255, 255, 255, 0.12);
+            --card-text: #f5f5f5;
+            --card-muted-text: rgba(245, 245, 245, 0.72);
+            --toolbar-bg: rgba(18, 18, 18, 0.78);
+            --toolbar-text: #f5f5f5;
+            --toolbar-border: rgba(255, 255, 255, 0.08);
+            --link-color: #8fd0ff;
+        }
+
+        body[data-theme="light"] {
+            --page-bg: #f4efe6;
+            --page-text: #1d1b16;
+            --surface-bg: rgba(255, 255, 255, 0.7);
+            --surface-border: rgba(29, 27, 22, 0.12);
+            --muted-text: rgba(29, 27, 22, 0.72);
+            --card-bg: rgba(255, 255, 255, 0.86);
+            --card-border: rgba(29, 27, 22, 0.1);
+            --card-text: #1d1b16;
+            --card-muted-text: rgba(29, 27, 22, 0.72);
+            --toolbar-bg: rgba(255, 248, 240, 0.84);
+            --toolbar-text: #1d1b16;
+            --toolbar-border: rgba(29, 27, 22, 0.08);
+            --link-color: #1b4a8f;
+        }
+
+        body {
+            font-family: sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            background: var(--page-bg);
+            color: var(--page-text);
+            transition: background-color 0.3s ease, color 0.3s ease;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(120, 120, 120, 0.35) transparent;
+        }
+
+        body::-webkit-scrollbar {
+            width: 10px;
+            height: 10px;
+        }
+
+        body::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        body::-webkit-scrollbar-thumb {
+            background-color: rgba(120, 120, 120, 0.35);
+            border-radius: 999px;
+            border: 3px solid transparent;
+            background-clip: content-box;
+        }
+
+        body::-webkit-scrollbar-corner {
+            background: transparent;
+        }
+
+        html.konami-on body {
+            background: radial-gradient(circle at 20% 20%, rgba(77, 208, 255, 0.18), transparent 28%),
+                        radial-gradient(circle at 80% 10%, rgba(255, 98, 196, 0.16), transparent 24%),
+                        linear-gradient(120deg, #08111f, #22104d, #0f3a36);
+            transition: background 600ms ease;
+            animation: konami-bg-drift 9s ease-in-out infinite alternate;
+        }
+
+        html.konami-on body,
+        html.konami-on body * {
+            text-shadow: 0 0 6px rgba(120, 200, 255, 0.24), 0 0 18px rgba(255, 107, 196, 0.16);
+        }
+
+        html.konami-on .site-shell,
+        html.konami-on .toolbar,
+        html.konami-on .card,
+        html.konami-on .doc-panel,
+        html.konami-on .hero-copy {
+            box-shadow: 0 0 32px rgba(120, 200, 255, 0.12), 0 0 52px rgba(255, 107, 196, 0.08);
+        }
+
+        .konami-effects {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 9999;
+            mix-blend-mode: screen;
+        }
+
+        .konami-trail,
+        .konami-firework {
+            position: fixed;
+            pointer-events: none;
+            will-change: transform, opacity;
+            user-select: none;
+        }
+
+        .konami-trail {
+            width: 16px;
+            height: 16px;
+            margin-left: -8px;
+            margin-top: -8px;
+            border-radius: 999px;
+            background: radial-gradient(circle, rgba(255,255,255,0.95) 0%, rgba(132, 219, 255, 0.92) 35%, rgba(132, 219, 255, 0) 72%);
+            box-shadow: 0 0 12px rgba(132, 219, 255, 0.95), 0 0 26px rgba(255, 107, 196, 0.55);
+            animation: konami-trail-fade 850ms ease-out forwards;
+        }
+
+        .konami-firework {
+            transform: translate(-50%, -50%) scale(0.8);
+            font-size: clamp(1.4rem, 2.8vw, 2.4rem);
+            filter: drop-shadow(0 0 16px rgba(255, 236, 156, 0.95)) drop-shadow(0 0 22px rgba(255, 107, 196, 0.72));
+            animation: konami-firework-burst 1500ms cubic-bezier(0.12, 0.72, 0.2, 1) forwards;
+        }
+
+        .konami-shake {
+            animation: konami-shake 680ms cubic-bezier(0.16, 0.84, 0.24, 1) both;
+            transform-origin: center center;
+            will-change: transform, filter;
+            filter: drop-shadow(0 0 14px rgba(132, 219, 255, 0.28)) drop-shadow(0 0 20px rgba(255, 107, 196, 0.18));
+        }
+
+        @keyframes konami-bg-drift {
+            from {
+                background-position: 0% 0%, 100% 0%, 0% 50%;
+            }
+
+            to {
+                background-position: 20% 10%, 80% 18%, 100% 55%;
+            }
+        }
+
+        @keyframes konami-trail-fade {
+            0% {
+                opacity: 0.95;
+                transform: translate(var(--x, 0), var(--y, 0)) scale(0.5);
+            }
+
+            70% {
+                opacity: 0.85;
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(var(--x, 0), var(--y, 0)) scale(1.8);
+            }
+        }
+
+        @keyframes konami-firework-burst {
+            0% {
+                opacity: 0;
+                transform: translate(-50%, -50%) scale(0.5) rotate(-18deg);
+                filter: blur(0px) drop-shadow(0 0 4px rgba(255, 236, 156, 0.6));
+            }
+
+            18% {
+                opacity: 1;
+            }
+
+            55% {
+                opacity: 1;
+                transform: translate(calc(-50% + var(--dx, 0px)), calc(-50% + var(--dy, 0px))) scale(1.2) rotate(10deg);
+            }
+
+            100% {
+                opacity: 0;
+                transform: translate(calc(-50% + var(--dx, 0px)), calc(-50% + var(--dy, 0px))) scale(1.8) rotate(28deg);
+                filter: blur(0.4px) drop-shadow(0 0 2px rgba(255, 236, 156, 0.15));
+            }
+        }
+
+        @keyframes konami-shake {
+            0% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+
+            8% {
+                transform: translate(calc(var(--shake-x, 1px) * -1), var(--shake-y, 1px)) rotate(calc(var(--shake-rot, 1deg) * -1)) scale(1.01);
+            }
+
+            16% {
+                transform: translate(var(--shake-x, 1px), calc(var(--shake-y, 1px) * -1)) rotate(var(--shake-rot, 1deg)) scale(1.015);
+            }
+
+            24% {
+                transform: translate(calc(var(--shake-x, 1px) * -1.5), var(--shake-y, 1px)) rotate(calc(var(--shake-rot, 1deg) * 1.15)) scale(1.01);
+            }
+
+            36% {
+                transform: translate(var(--shake-x, 1px), calc(var(--shake-y, 1px) * -1.2)) rotate(calc(var(--shake-rot, 1deg) * -1.2)) scale(1.02);
+            }
+
+            48% {
+                transform: translate(calc(var(--shake-x, 1px) * -0.8), var(--shake-y, 1px)) rotate(calc(var(--shake-rot, 1deg) * 0.7)) scale(1.01);
+            }
+
+            62% {
+                transform: translate(var(--shake-x, 1px), calc(var(--shake-y, 1px) * -0.9)) rotate(calc(var(--shake-rot, 1deg) * -0.55)) scale(1.015);
+            }
+
+            78% {
+                transform: translate(calc(var(--shake-x, 1px) * -0.5), var(--shake-y, 1px)) rotate(calc(var(--shake-rot, 1deg) * 0.4)) scale(1.005);
+            }
+
+            100% {
+                transform: translate(0, 0) rotate(0deg) scale(1);
+            }
+        }
+
+        .site-shell { max-width: 800px; margin: 0 auto; padding: calc(60px + 2rem) 2em 2em; }
+        .doc-panel {
+            background: var(--surface-bg);
+            color: var(--page-text);
+            border-radius: 14px;
+            padding: 1.2rem 1.4rem;
+            border: 1px solid var(--surface-border);
+            box-sizing: border-box;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+        }
+
+        .doc-panel a {
+            color: var(--link-color);
+        }
+
+        .doc-panel :first-child {
+            margin-top: 0;
+        }
+
+        .doc-panel :last-child {
+            margin-bottom: 0;
+        }
+
+        header { border-bottom: 1px solid var(--surface-border); margin-bottom: 20px; }
+        .emoji { height: 1.2em; } /* restrict size */
+    </style>
+</head>
+<body data-theme="dark">
+    <nav class="toolbar">
+  <div class="logo">Gingkoleaves</div>
+  <ul>
+    <li><a href="/">Homepage</a></li>
+    <li><a href="/gallery/">Gallery</a></li>
+    <li><a href="/notes">Notes</a></li>
+    <li><a href="/talks">Talks</a></li>
+    <li><a href="/feed.xml" target="_blank" rel="noopener noreferrer">Feed</a></li>
+    <li><a href="/notes/feed.xml" target="_blank" rel="noopener noreferrer">Notes Feed</a></li>
+    <li><a href="/talks/feed.xml" target="_blank" rel="noopener noreferrer">Talks Feed</a></li>
+    <li><a href="/friends/">友链</a></li>
+    <li><button class="theme-toggle" type="button" aria-label="切换明暗主题">Night</button></li>
+  </ul>
+</nav>
+
+<style>
+.toolbar {
+  position: fixed; top: 0; left: 0; right: 0; width: 100%; height: 60px;
+  box-sizing: border-box;
+  background: var(--toolbar-bg); color: var(--toolbar-text); backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--toolbar-border);
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0 50px; z-index: 1000; box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+.toolbar .logo { font-weight: 700; }
+.toolbar ul { display: flex; list-style: none; align-items: center; gap: 20px; margin: 0; padding: 0; }
+.toolbar li { margin-left: 20px; }
+.toolbar a, .theme-toggle { color: inherit; }
+.toolbar a { text-decoration: none; }
+.toolbar a[aria-current="page"] { font-weight: 700; text-decoration: underline; text-underline-offset: 0.25em; }
+.theme-toggle {
+  border: 1px solid currentColor;
+  background: transparent;
+  padding: 6px 12px;
+  border-radius: 999px;
+  cursor: pointer;
+  font: inherit;
+}
+
+body[data-theme="light"] .theme-toggle::after { content: "Day"; }
+body[data-theme="dark"] .theme-toggle::after { content: "Night"; }
+
+.theme-toggle { min-width: 76px; }
+</style>
+
+<script>
+(function () {
+  const storageKey = 'gingkoleaves-theme';
+  const body = document.body;
+  const button = document.querySelector('.theme-toggle');
+
+  function applyTheme(theme) {
+    body.dataset.theme = theme;
+    if (button) {
+      button.textContent = theme === 'dark' ? 'Night' : 'Day';
+      button.setAttribute('aria-label', theme === 'dark' ? '切换到白天主题' : '切换到夜晚主题');
+    }
+    document.dispatchEvent(new CustomEvent('site-theme-change', { detail: { theme: theme } }));
+  }
+
+  const savedTheme = localStorage.getItem(storageKey);
+  const preferredTheme = savedTheme || (window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark');
+  applyTheme(preferredTheme);
+
+  if (button) {
+    button.addEventListener('click', function () {
+      const nextTheme = body.dataset.theme === 'dark' ? 'light' : 'dark';
+      localStorage.setItem(storageKey, nextTheme);
+      applyTheme(nextTheme);
+    });
+  }
+})();
+</script>
+    <div class="konami-effects" id="konami-effects" aria-hidden="true"></div>
+    <div class="site-shell">
+        
+        <div class="container">
+  <h2>Talks <img class="emoji" title=":speech_balloon:" alt=":speech_balloon:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f4ac.png" height="20" width="20">
+</h2>
+  <div class="talk-list">
+    
+      <a href="/talks/2026-4-11-init/" class="talk-card">
+        <div class="content">Hello World!
+
+这是我的第一篇 Jekyll 博客。我发现使用静态网站生成器非常高效 <img class="emoji" title=":rocket:" alt=":rocket:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f680.png" height="20" width="20">。
+
+目前我正在研究：
+
+  rCore-Tutorial: 探索 RISC-V 上的 OS 实现。
+  MIPS CPU: 优化指令集流水线。
+
+
+代码块测试：
+
+fn main() {
+    println!("Hello, OS kernel!");
+}
+
+</div>
+        <div class="meta">2026-04-11 00:00</div>
+      </a>
+    
+  </div>
+</div>
+
+<style>
+.talk-list { display: flex; flex-direction: column; gap: 16px; padding-top: 14px; }
+.talk-card { 
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  height: 12.5rem;
+  overflow: hidden;
+  background: var(--card-bg); padding: 20px; border-left: 4px solid #007bff; 
+  border-radius: 8px; border: 1px solid var(--card-border);
+  text-decoration: none;
+  color: var(--card-text);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+.talk-card .content {
+  color: inherit;
+  margin: 0;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.talk-card .content p:last-child { margin-bottom: 0; }
+.meta { font-size: 0.8em; color: var(--card-muted-text); margin-top: auto; }
+</style>
+
+
+        
+
+        <footer>
+            <p>© 2026 Gingkoleaves</p>
+        </footer>
+    </div>
+    <script src="/assets/js/konami.js" defer></script>
+</body>
+</html>
