@@ -10,6 +10,29 @@ collections:
     output: true
     permalink: /talks/:path/
 
+# Feed
+feed:
+  collections:
+    notes:
+      path: /notes/feed.xml
+    talks:
+      path: /talks/feed.xml
+
+# Archives
+jekyll-archives:
+  enabled:
+    - categories
+    - tags
+    - year
+  layouts:
+    category: archive
+    tag: archive
+    year: archive
+  permalinks:
+    category: /categories/:name/
+    tag: /tags/:name/
+    year: /archives/:year/
+
 # 插件配置
 plugins:
   - jemoji

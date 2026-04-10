@@ -19,6 +19,11 @@ title: Notes
 <style>
 .card-list { display: flex; flex-direction: column; gap: 16px; padding-top: 14px; }
 .card { 
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  height: 12.5rem;
+  overflow: hidden;
   background: var(--card-bg); border: 1px solid var(--card-border); border-radius: 8px; 
   padding: 20px; text-decoration: none; color: var(--card-text); transition: 0.3s;
   backdrop-filter: blur(10px);
@@ -27,4 +32,23 @@ title: Notes
 .card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
 .card h3, .card p, .card .date { color: inherit; }
 .card p, .card .date { color: var(--card-muted-text); }
+.card h3 {
+  margin: 0;
+  line-height: 1.35;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.card p {
+  margin: 0;
+  line-height: 1.6;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.card .date {
+  margin-top: auto;
+}
 </style>

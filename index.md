@@ -86,7 +86,7 @@ title: Home
   .hero-backdrop {
     position: absolute;
     inset: 0;
-    background-image: url('{{ "/assets/images/bg1.jpg" | relative_url }}');
+    background-image: url('{{ "/assets/images/bg4.jpg" | relative_url }}');
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
