@@ -313,9 +313,10 @@
 
     function getTodayDate() {
       const date = new Date();
-      const timezoneOffsetMinutes = date.getTimezoneOffset();
-      date.setMinutes(date.getMinutes() - timezoneOffsetMinutes);
-      return date.toISOString().slice(0, 10);
+      const year = date.getFullYear();
+      const month = String(date.getMonth() + 1).padStart(2, "0");
+      const day = String(date.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
     }
 
     function applyDemo(theme, layout) {
@@ -357,15 +358,36 @@
       }
 
       entries.forEach((entry, index) => {
+        const safeIndex = Number.isInteger(index) ? index : 0;
         const wrapper = document.createElement("article");
         wrapper.className = "entry";
-        wrapper.innerHTML = `
-          <div class="entry-head">
-            <strong>${escapeHtml(entry.date || defaultDiaryDateText)}</strong>
-            <button type="button" class="ghost" data-index="${index}" data-action="delete">Delete</button>
-          </div>
-          <p class="entry-body" contenteditable="true" role="textbox" aria-label="Edit diary entry" aria-multiline="true" data-index="${index}">${escapeHtml(entry.text || "")}</p>
-        `;
+
+        const head = document.createElement("div");
+        head.className = "entry-head";
+
+        const dateText = document.createElement("strong");
+        dateText.textContent = entry.date || defaultDiaryDateText;
+
+        const deleteButton = document.createElement("button");
+        deleteButton.type = "button";
+        deleteButton.className = "ghost";
+        deleteButton.dataset.index = String(safeIndex);
+        deleteButton.dataset.action = "delete";
+        deleteButton.textContent = "Delete";
+
+        const body = document.createElement("p");
+        body.className = "entry-body";
+        body.setAttribute("contenteditable", "true");
+        body.setAttribute("role", "textbox");
+        body.setAttribute("aria-label", "Edit diary entry");
+        body.setAttribute("aria-multiline", "true");
+        body.dataset.index = String(safeIndex);
+        body.textContent = String(entry.text ?? "");
+
+        head.appendChild(dateText);
+        head.appendChild(deleteButton);
+        wrapper.appendChild(head);
+        wrapper.appendChild(body);
         entriesContainer.appendChild(wrapper);
       });
     }
@@ -394,7 +416,7 @@
       const editableBodies = entriesContainer.querySelectorAll(".entry-body");
       editableBodies.forEach((node) => {
         const index = Number(node.dataset.index);
-        if (!Number.isNaN(index) && entries[index]) {
+        if (!Number.isNaN(index) && index >= 0 && index < entries.length) {
           entries[index].text = node.textContent.trim();
         }
       });
@@ -421,15 +443,6 @@
       diaryText.value = "";
       showStatus("All local homepage data has been reset.");
       renderEntries();
-    }
-
-    function escapeHtml(text) {
-      return String(text ?? "")
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll("\"", "&quot;")
-        .replaceAll("'", "&#39;");
     }
 
     function loadAll() {
