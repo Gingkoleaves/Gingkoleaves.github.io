@@ -43,28 +43,16 @@
             background: var(--page-bg);
             color: var(--page-text);
             transition: background-color 0.3s ease, color 0.3s ease;
-            scrollbar-width: thin;
-            scrollbar-color: rgba(120, 120, 120, 0.35) transparent;
+        }
+
+        html,
+        body {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
 
         body::-webkit-scrollbar {
-            width: 10px;
-            height: 10px;
-        }
-
-        body::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        body::-webkit-scrollbar-thumb {
-            background-color: rgba(120, 120, 120, 0.35);
-            border-radius: 999px;
-            border: 3px solid transparent;
-            background-clip: content-box;
-        }
-
-        body::-webkit-scrollbar-corner {
-            background: transparent;
+            display: none;
         }
 
         html.konami-on body {

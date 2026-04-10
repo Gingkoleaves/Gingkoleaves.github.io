@@ -43,28 +43,6 @@
             background: var(--page-bg);
             color: var(--page-text);
             transition: background-color 0.3s ease, color 0.3s ease;
-            scrollbar-width: thin;
-            scrollbar-color: rgba(120, 120, 120, 0.35) transparent;
-        }
-
-        body::-webkit-scrollbar {
-            width: 10px;
-            height: 10px;
-        }
-
-        body::-webkit-scrollbar-track {
-            background: transparent;
-        }
-
-        body::-webkit-scrollbar-thumb {
-            background-color: rgba(120, 120, 120, 0.35);
-            border-radius: 999px;
-            border: 3px solid transparent;
-            background-clip: content-box;
-        }
-
-        body::-webkit-scrollbar-corner {
-            background: transparent;
         }
 
         html.konami-on body {
@@ -253,9 +231,6 @@
     <li><a href="/gallery/">Gallery</a></li>
     <li><a href="/notes">Notes</a></li>
     <li><a href="/talks">Talks</a></li>
-    <li><a href="/feed.xml" target="_blank" rel="noopener noreferrer">Feed</a></li>
-    <li><a href="/notes/feed.xml" target="_blank" rel="noopener noreferrer">Notes Feed</a></li>
-    <li><a href="/talks/feed.xml" target="_blank" rel="noopener noreferrer">Talks Feed</a></li>
     <li><a href="/friends/">友链</a></li>
     <li><button class="theme-toggle" type="button" aria-label="切换明暗主题">Night</button></li>
   </ul>
