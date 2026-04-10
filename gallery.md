@@ -8,7 +8,6 @@ permalink: /gallery/
   <div class="gallery-hero card">
     <div class="gallery-heading">
       <h2>Gallery</h2>
-      <p>单独的图片页面，直接网格展示所有图片，按各自长宽比自然排列。</p>
     </div>
 
     <div class="gallery-grid" aria-label="Gallery images">
@@ -67,13 +66,8 @@ permalink: /gallery/
   margin-bottom: 1.2rem;
 }
 
-.gallery-heading h2,
-.gallery-heading p {
+.gallery-heading h2 {
   margin: 0;
-}
-
-.gallery-heading p {
-  color: var(--muted-text);
 }
 
 .gallery-grid {

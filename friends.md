@@ -9,14 +9,14 @@ permalink: /friends/
   <p class="friends-intro">大佬</p>
 
   <div class="friends-list">
-    <a class="friend-card" href="https://github.com/" target="_blank" rel="noreferrer">
-      <strong>GitHub</strong>
-      <span>示例链接</span>
+    {% for friend in site.data.friends %}
+    <a class="friend-card" href="{{ friend.url }}" target="_blank" rel="noreferrer">
+      <strong>{{ friend.name }}</strong>
+      {% if friend.description %}
+      <span>{{ friend.description }}</span>
+      {% endif %}
     </a>
-    <a class="friend-card" href="https://jekyllrb.com/" target="_blank" rel="noreferrer">
-      <strong>Jekyll</strong>
-      <span>示例链接</span>
-    </a>
+    {% endfor %}
   </div>
 </div>
 
