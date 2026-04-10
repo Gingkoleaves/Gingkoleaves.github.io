@@ -9,7 +9,7 @@ title: Talks
     {% for talk in site.talks %}
       <a href="{{ talk.url }}" class="talk-card">
         <div class="content">{{ talk.content | strip_html }}</div>
-        <div class="meta">{{ talk.date | date: "%Y-%m-%d %H:%M" }}</div>
+        <div class="meta">{{ talk.date | date: "%Y-%m-%d" }}</div>
       </a>
     {% endfor %}
   </div>
@@ -43,5 +43,5 @@ title: Talks
   overflow: hidden;
 }
 .talk-card .content p:last-child { margin-bottom: 0; }
-.meta { font-size: 0.8em; color: var(--card-muted-text); margin-top: auto; }
+.meta { margin-top: auto; }
 </style>

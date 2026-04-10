@@ -54,4 +54,9 @@ title: Notes
 .card .date {
   margin-top: auto;
 }
+.card .date,
+.talk-card .meta {
+  font-size: 0.92rem;
+  color: var(--card-muted-text);
+}
 </style>
