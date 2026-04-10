@@ -171,10 +171,6 @@ title: Home
     z-index: 0;
   }
 
-  body[data-theme="light"] .content-screen::before {
-    opacity: 0;
-  }
-
   .content-container {
     display: flex;
     flex-direction: column;
