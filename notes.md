@@ -37,9 +37,10 @@ title: Notes
 
   <div class="archive-group" aria-label="Notes archive by year">
     <h3>Archived by year</h3>
-    <div class="archive-chips">
+    <div class="archive-chips" id="note-year-filters">
+      <a class="archive-chip archive-chip-active" href="{{ '/notes/' | relative_url }}" data-filter-year="__all__" aria-pressed="true">All years</a>
       {% for group in note_year_groups %}
-        <a class="archive-chip" href="{{ '/archives/' | append: group.name | append: '/' | relative_url }}">{{ group.name }} ({{ group.items | size }})</a>
+        <a class="archive-chip" href="{{ '/notes/?year=' | append: group.name | relative_url }}" data-filter-year="{{ group.name }}" aria-pressed="false">{{ group.name }} ({{ group.items | size }})</a>
       {% endfor %}
     </div>
   </div>
@@ -88,7 +89,7 @@ title: Notes
           {% assign note_tag_keys = note_tag_keys | push: tag_key %}
         {% endfor %}
       {% endif %}
-      <a href="{{ note.permalink }}" class="card" data-note-tags="{{ note_tag_keys | join: '|' }}">
+      <a href="{{ note.permalink }}" class="card" data-note-tags="{{ note_tag_keys | join: '|' }}" data-note-year="{{ note.date | date: '%Y' }}">
         {% if cover != '' %}
           <img class="entry-cover" src="{{ cover | relative_url }}" alt="{{ note.title }} cover" loading="lazy" />
         {% endif %}
@@ -253,79 +254,113 @@ title: Notes
 <script>
 (() => {
   const filterBar = document.getElementById('note-tag-filters');
+  const yearBar = document.getElementById('note-year-filters');
   const summary = document.getElementById('note-filter-summary');
   const cards = Array.from(document.querySelectorAll('.card-list .card[data-note-tags]'));
 
-  if (!filterBar || !summary || cards.length === 0) {
+  if (!filterBar || !yearBar || !summary || cards.length === 0) {
     return;
   }
 
-  const chips = Array.from(filterBar.querySelectorAll('[data-filter-tag]'));
+  const tagChips = Array.from(filterBar.querySelectorAll('[data-filter-tag]'));
+  const yearChips = Array.from(yearBar.querySelectorAll('[data-filter-year]'));
   const slugify = (value) => String(value || '')
     .toLowerCase()
     .trim()
     .replace(/[^a-z0-9\s-]/g, '')
     .replace(/\s+/g, '-')
     .replace(/-+/g, '-');
+  const state = { tag: '__all__', year: '__all__' };
 
-  const setActiveChip = (active) => {
-    chips.forEach((chip) => {
+  const setActiveChip = (chipList, active) => {
+    chipList.forEach((chip) => {
       const isActive = chip === active;
       chip.classList.toggle('archive-chip-active', isActive);
       chip.setAttribute('aria-pressed', isActive ? 'true' : 'false');
     });
   };
 
-  const applyFilter = (tagValue, chip) => {
-    const normalized = String(tagValue || '__all__').toLowerCase();
+  const syncUrl = () => {
+    const params = new URLSearchParams();
+    if (state.tag !== '__all__') params.set('tag', state.tag);
+    if (state.year !== '__all__') params.set('year', state.year);
+    const query = params.toString();
+    const next = query ? `{{ '/notes/' | relative_url }}?${query}` : `{{ '/notes/' | relative_url }}`;
+    if (window.history && window.history.replaceState) {
+      window.history.replaceState({}, '', next);
+    }
+  };
+
+  const applyFilters = () => {
     let shown = 0;
 
     cards.forEach((card) => {
       const tags = String(card.getAttribute('data-note-tags') || '').toLowerCase().split('|').filter(Boolean);
-      const visible = normalized === '__all__' || tags.includes(normalized);
+      const year = String(card.getAttribute('data-note-year') || '');
+      const byTag = state.tag === '__all__' || tags.includes(state.tag);
+      const byYear = state.year === '__all__' || year === state.year;
+      const visible = byTag && byYear;
       card.classList.toggle('is-hidden', !visible);
       if (visible) shown += 1;
     });
 
-    setActiveChip(chip);
-    if (normalized === '__all__') {
-      summary.textContent = `Currently showing all ${shown} notes`;
-      if (window.history && window.history.replaceState) {
-        window.history.replaceState({}, '', '{{ '/notes/' | relative_url }}');
-      }
-    } else {
-      summary.textContent = `Tag: ${tagValue}, matched ${shown} notes`;
-      if (window.history && window.history.replaceState) {
-        const next = '{{ '/notes/' | relative_url }}' + '?tag=' + encodeURIComponent(normalized);
-        window.history.replaceState({}, '', next);
-      }
-    }
+    const parts = [];
+    if (state.tag !== '__all__') parts.push(`Tag: ${state.tag}`);
+    if (state.year !== '__all__') parts.push(`Year: ${state.year}`);
+    summary.textContent = parts.length > 0
+      ? `${parts.join(' · ')}, matched ${shown} notes`
+      : `Currently showing all ${shown} notes`;
+    syncUrl();
   };
 
-  chips.forEach((chip) => {
+  tagChips.forEach((chip) => {
     chip.addEventListener('click', (event) => {
       event.preventDefault();
-      const selectedTag = chip.getAttribute('data-filter-tag') || '__all__';
-      applyFilter(selectedTag, chip);
+      state.tag = (chip.getAttribute('data-filter-tag') || '__all__').toLowerCase();
+      setActiveChip(tagChips, chip);
+      applyFilters();
+    });
+  });
+
+  yearChips.forEach((chip) => {
+    chip.addEventListener('click', (event) => {
+      event.preventDefault();
+      state.year = chip.getAttribute('data-filter-year') || '__all__';
+      setActiveChip(yearChips, chip);
+      applyFilters();
     });
   });
 
   const params = new URLSearchParams(window.location.search);
   const initialTag = params.get('tag');
+  const initialYear = params.get('year');
+
   if (initialTag) {
-    const initialKey = slugify(initialTag);
-    const initialChip = chips.find((chip) => {
-      const value = (chip.getAttribute('data-filter-tag') || '').toLowerCase();
-      return value === initialKey;
-    });
-    if (initialChip) {
-      applyFilter(initialChip.getAttribute('data-filter-tag'), initialChip);
-      return;
+    const initialTagKey = slugify(initialTag);
+    const chip = tagChips.find((item) => (item.getAttribute('data-filter-tag') || '').toLowerCase() === initialTagKey);
+    if (chip) {
+      state.tag = initialTagKey;
+      setActiveChip(tagChips, chip);
     }
   }
-  const allChip = chips.find((chip) => (chip.getAttribute('data-filter-tag') || '') === '__all__');
-  if (allChip) {
-    applyFilter('__all__', allChip);
+
+  if (initialYear) {
+    const chip = yearChips.find((item) => (item.getAttribute('data-filter-year') || '') === initialYear);
+    if (chip) {
+      state.year = initialYear;
+      setActiveChip(yearChips, chip);
+    }
   }
+
+  if (state.tag === '__all__') {
+    const allTagChip = tagChips.find((chip) => (chip.getAttribute('data-filter-tag') || '') === '__all__');
+    if (allTagChip) setActiveChip(tagChips, allTagChip);
+  }
+  if (state.year === '__all__') {
+    const allYearChip = yearChips.find((chip) => (chip.getAttribute('data-filter-year') || '') === '__all__');
+    if (allYearChip) setActiveChip(yearChips, allYearChip);
+  }
+
+  applyFilters();
 })();
 </script>
