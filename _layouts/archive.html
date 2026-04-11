@@ -29,7 +29,7 @@ layout: default
           <div class="archive-item-tags">
             {% for tag in post.tags %}
             {% assign slugified_tag = tag | slugify %}
-            <a href="/tags/{{ slugified_tag }}/" class="archive-tag">#{{ tag }}</a>
+            <a href="{{ '/tags/' | append: slugified_tag | append: '/' | relative_url }}" class="archive-tag">#{{ tag }}</a>
             {% endfor %}
           </div>
           {% endif %}

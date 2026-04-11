@@ -90,8 +90,6 @@ permalink: /gallery/
 .gallery-item img {
   width: 100%;
   height: auto;
-  aspect-ratio: 16 / 9;
-  object-fit: cover;
   display: block;
   border-radius: 12px;
   background: rgba(0, 0, 0, 0.08);

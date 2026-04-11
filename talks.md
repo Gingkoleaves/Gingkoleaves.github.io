@@ -55,7 +55,7 @@ title: Talks
           {% endif %}
         {% endfor %}
         {% assign slugified_tag = tag | slugify %}
-        <a class="archive-chip" href="/tags/{{ slugified_tag }}/">#{{ tag }} ({{ tag_count }})</a>
+        <a class="archive-chip" href="{{ '/tags/' | append: slugified_tag | append: '/' | relative_url }}">{{ tag }} ({{ tag_count }})</a>
       {% endfor %}
     </div>
   </div>
