@@ -3,29 +3,44 @@ layout: default
 ---
 
 <div class="container">
-  {% assign archive_posts = page.posts | default: site.tags[page.title] | default: site.categories[page.title] %}
+  {% assign archive_posts = page.posts %}
   {% assign archive_count = archive_posts | size %}
   <h2>
     {% if page.type == 'tag' %}
-      Tag: {{ page.title }}
+      标签: #{{ page.title }}
     {% elsif page.type == 'category' %}
-      Category: {{ page.title }}
+      分类: {{ page.title }}
     {% elsif page.type == 'year' %}
-      Archive: {{ page.title }}
+      {{ page.title }} 年
     {% else %}
-      Archive: {{ page.title }}
+      归档: {{ page.title }}
     {% endif %}
   </h2>
   <p class="archive-summary-line">共 {{ archive_count }} 篇内容</p>
 
+  {% if archive_posts.size > 0 %}
   <ul class="archive-list">
-    {% for post in archive_posts %}
+    {% assign sorted_posts = archive_posts | sort: 'date' | reverse %}
+    {% for post in sorted_posts %}
       <li class="archive-item">
-        <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        <div class="archive-item-content">
+          <a href="{{ post.url | relative_url }}" class="archive-item-title">{{ post.title }}</a>
+          {% if post.tags %}
+          <div class="archive-item-tags">
+            {% for tag in post.tags %}
+            {% assign slugified_tag = tag | slugify %}
+            <a href="/tags/{{ slugified_tag }}/" class="archive-tag">#{{ tag }}</a>
+            {% endfor %}
+          </div>
+          {% endif %}
+        </div>
         <span class="archive-date">{{ post.date | date: "%Y-%m-%d" }}</span>
       </li>
     {% endfor %}
   </ul>
+  {% else %}
+  <p class="archive-empty">该分类下暂无内容</p>
+  {% endif %}
 </div>
 
 <style>
@@ -38,8 +53,15 @@ layout: default
 }
 
 .archive-summary-line {
-  margin: 0.25rem 0 0;
+  margin: 0.25rem 0 1rem;
   color: var(--muted-text);
+  font-size: 0.95rem;
+}
+
+.archive-empty {
+  margin: 2rem 0;
+  color: var(--muted-text);
+  text-align: center;
 }
 
 .archive-item {
@@ -51,15 +73,54 @@ layout: default
   border: 1px solid var(--surface-border);
   border-radius: 10px;
   background: var(--surface-bg);
+  transition: background-color 0.2s ease;
 }
 
-.archive-item a {
+.archive-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.archive-item-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.archive-item-title {
   color: var(--page-text);
   text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
 }
 
-.archive-item a:hover {
+.archive-item-title:hover {
+  color: var(--link-color);
   text-decoration: underline;
+}
+
+.archive-item-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.archive-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--surface-border);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--link-color);
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.archive-tag:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
 }
 
 .archive-date {

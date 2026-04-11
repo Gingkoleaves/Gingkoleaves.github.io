@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>友链 - Gingkoleaves</title>
+    <title>2026 Archive - Gingkoleaves</title>
     <style>
         :root {
             --page-bg: #121212;
@@ -346,71 +346,78 @@ body[data-theme="dark"] .theme-toggle::after { content: "Night"; }
     <div class="konami-effects" id="konami-effects" aria-hidden="true"></div>
     <div class="site-shell">
         
-        <div class="friends-page">
-  <h2>友链</h2>
-  <p class="friends-intro">大佬</p>
+        <div class="container archive-page">
+  <h2>2026 Archive</h2>
+  
+  
+  
+  
+  
 
-  <div class="friends-list">
-    
-    <a class="friend-card" href="https://github.com/" target="_blank" rel="noreferrer">
-      <strong>GitHub</strong>
+  <p class="archive-summary-line">共 0 篇内容</p>
+
+  <section class="archive-section">
+    <h3>Notes (0)</h3>
+    <ul class="archive-list">
       
-      <span>示例链接</span>
+    </ul>
+  </section>
+
+  <section class="archive-section">
+    <h3>Talks (0)</h3>
+    <ul class="archive-list">
       
-    </a>
-    
-    <a class="friend-card" href="https://jekyllrb.com/" target="_blank" rel="noreferrer">
-      <strong>Jekyll</strong>
-      
-      <span>示例链接</span>
-      
-    </a>
-    
-  </div>
+    </ul>
+  </section>
 </div>
 
 <style>
-.friends-page {
-  padding-top: 20px;
-}
-
-.friends-intro {
-  color: var(--muted-text);
-  max-width: 40rem;
-}
-
-.friends-list {
+.archive-page {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
-  margin-top: 24px;
+  gap: 22px;
 }
 
-.friend-card {
+.archive-section h3 {
+  margin: 0 0 10px;
+}
+
+.archive-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+
+.archive-summary-line {
+  margin: 0;
+  color: var(--muted-text);
+}
+
+.archive-item {
   display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 18px 20px;
-  border-radius: 16px;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 14px;
   border: 1px solid var(--surface-border);
+  border-radius: 10px;
   background: var(--surface-bg);
+}
+
+.archive-item a {
   color: var(--page-text);
   text-decoration: none;
-  transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
 }
 
-.friend-card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.24);
+.archive-item a:hover {
+  text-decoration: underline;
 }
 
-body[data-theme="light"] .friend-card:hover {
-  border-color: rgba(29, 27, 22, 0.24);
-}
-
-.friend-card span {
+.archive-date {
   color: var(--muted-text);
-  font-size: 0.95rem;
+  white-space: nowrap;
+  font-size: 0.9rem;
 }
 </style>
 

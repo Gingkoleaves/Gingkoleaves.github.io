@@ -6,24 +6,37 @@ title: Talks
 <div class="container">
   <h2>Talks :speech_balloon:</h2>
   {% assign talk_year_groups = site.talks | group_by_exp: "talk", "talk.date | date: '%Y'" | sort: "name" | reverse %}
-  {% assign archive_tags = site.tags | sort %}
+  
+  <!-- Extract tags from talks collection -->
+  {% assign all_tags = '' | split: '' %}
+  {% for talk in site.talks %}
+    {% if talk.tags %}
+      {% for tag in talk.tags %}
+        {% unless all_tags contains tag %}
+          {% assign all_tags = all_tags | push: tag %}
+        {% endunless %}
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+  {% assign all_tags = all_tags | sort %}
+  
   <div class="archive-summary" aria-label="Talks statistics">
     <div class="archive-stat">
       <strong>{{ site.talks | size }}</strong>
-      <span>篇演讲</span>
+      <span>talks</span>
     </div>
     <div class="archive-stat">
       <strong>{{ talk_year_groups | size }}</strong>
-      <span>个年份</span>
+      <span>different year</span>
     </div>
     <div class="archive-stat">
-      <strong>{{ archive_tags | size }}</strong>
-      <span>个标签</span>
+      <strong>{{ all_tags | size }}</strong>
+      <span>tags</span>
     </div>
   </div>
 
   <div class="archive-group" aria-label="Talks archive by year">
-    <h3>按年份归档</h3>
+    <h3>Archived by year</h3>
     <div class="archive-chips">
       {% for group in talk_year_groups %}
         <a class="archive-chip" href="{{ '/archives/' | append: group.name | append: '/' | relative_url }}">{{ group.name }} ({{ group.items | size }})</a>
@@ -32,12 +45,17 @@ title: Talks
   </div>
 
   <div class="archive-group" aria-label="Talks archive by tag">
-    <h3>按标签归类</h3>
+    <h3>Archived by tags</h3>
     <div class="archive-chips">
-      {% for tag in archive_tags %}
-        {% assign tag_name = tag[0] %}
-        {% assign tag_count = tag[1] | size %}
-        <a class="archive-chip" href="{{ '/tags/' | append: tag_name | slugify | append: '/' | relative_url }}">#{{ tag_name }} ({{ tag_count }})</a>
+      {% for tag in all_tags %}
+        {% assign tag_count = 0 %}
+        {% for talk in site.talks %}
+          {% if talk.tags contains tag %}
+            {% assign tag_count = tag_count | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+        {% assign slugified_tag = tag | slugify %}
+        <a class="archive-chip" href="/tags/{{ slugified_tag }}/">#{{ tag }} ({{ tag_count }})</a>
       {% endfor %}
     </div>
   </div>

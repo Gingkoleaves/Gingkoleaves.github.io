@@ -217,6 +217,36 @@
             -webkit-backdrop-filter: blur(10px);
         }
 
+        .doc-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--surface-border);
+        }
+
+        .doc-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .doc-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid var(--surface-border);
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--link-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .doc-tag:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-1px);
+        }
+
         .doc-panel a {
             color: var(--link-color);
         }
@@ -317,6 +347,22 @@ body[data-theme="dark"] .theme-toggle::after { content: "Night"; }
     <div class="site-shell">
         
         <article class="doc-panel">
+            
+            <div class="doc-header">
+                <div class="doc-tags">
+                    
+                    
+                    <a href="/tags/cs61c/" class="doc-tag">#cs61c</a>
+                    
+                    
+                    <a href="/tags/c/" class="doc-tag">#c</a>
+                    
+                    
+                    <a href="/tags/risc-v/" class="doc-tag">#risc-v</a>
+                    
+                </div>
+            </div>
+            
             <h1 id="2025-年-9-月-15-日">2025 年 9 月 15 日</h1>
 
 <h2 id="lec1略">Lec1:略</h2>

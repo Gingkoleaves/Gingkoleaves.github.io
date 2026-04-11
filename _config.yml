@@ -21,15 +21,12 @@ feed:
 # Archives
 jekyll-archives:
   enabled:
-    - categories
     - tags
+    - categories
     - year
-  collections:
-    - notes
-    - talks
   layouts:
-    category: archive
     tag: archive
+    category: archive
     year: archive
   permalinks:
     category: /categories/:name/

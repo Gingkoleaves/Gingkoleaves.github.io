@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>友链 - Gingkoleaves</title>
+    <title>setup - Gingkoleaves</title>
     <style>
         :root {
             --page-bg: #121212;
@@ -346,74 +346,131 @@ body[data-theme="dark"] .theme-toggle::after { content: "Night"; }
     <div class="konami-effects" id="konami-effects" aria-hidden="true"></div>
     <div class="site-shell">
         
-        <div class="friends-page">
-  <h2>友链</h2>
-  <p class="friends-intro">大佬</p>
+        <div class="container">
+  
+  
+  <h2>
+    
+      标签: #setup
+    
+  </h2>
+  <p class="archive-summary-line">共 1 篇内容</p>
 
-  <div class="friends-list">
+  
+  <ul class="archive-list">
     
-    <a class="friend-card" href="https://github.com/" target="_blank" rel="noreferrer">
-      <strong>GitHub</strong>
-      
-      <span>示例链接</span>
-      
-    </a>
     
-    <a class="friend-card" href="https://jekyllrb.com/" target="_blank" rel="noreferrer">
-      <strong>Jekyll</strong>
-      
-      <span>示例链接</span>
-      
-    </a>
+      <li class="archive-item">
+        <div class="archive-item-content">
+          <a href="/notes/Notes_4_Jekyll/" class="archive-item-title">Trip to Jekyll</a>
+          
+          <div class="archive-item-tags">
+            
+            
+            <a href="/tags/jekyll/" class="archive-tag">#jekyll</a>
+            
+            
+            <a href="/tags/setup/" class="archive-tag">#setup</a>
+            
+            
+            <a href="/tags/static-site/" class="archive-tag">#static-site</a>
+            
+          </div>
+          
+        </div>
+        <span class="archive-date">2026-04-11</span>
+      </li>
     
-  </div>
+  </ul>
+  
 </div>
 
 <style>
-.friends-page {
-  padding-top: 20px;
-}
-
-.friends-intro {
-  color: var(--muted-text);
-  max-width: 40rem;
-}
-
-.friends-list {
+.archive-list {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 16px;
-  margin-top: 24px;
+  gap: 10px;
 }
 
-.friend-card {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-  padding: 18px 20px;
-  border-radius: 16px;
-  border: 1px solid var(--surface-border);
-  background: var(--surface-bg);
-  color: var(--page-text);
-  text-decoration: none;
-  transition: transform 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
-}
-
-.friend-card:hover {
-  transform: translateY(-2px);
-  border-color: rgba(255, 255, 255, 0.24);
-}
-
-body[data-theme="light"] .friend-card:hover {
-  border-color: rgba(29, 27, 22, 0.24);
-}
-
-.friend-card span {
+.archive-summary-line {
+  margin: 0.25rem 0 1rem;
   color: var(--muted-text);
   font-size: 0.95rem;
 }
-</style>
 
+.archive-empty {
+  margin: 2rem 0;
+  color: var(--muted-text);
+  text-align: center;
+}
+
+.archive-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 12px 14px;
+  border: 1px solid var(--surface-border);
+  border-radius: 10px;
+  background: var(--surface-bg);
+  transition: background-color 0.2s ease;
+}
+
+.archive-item:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.archive-item-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.archive-item-title {
+  color: var(--page-text);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.archive-item-title:hover {
+  color: var(--link-color);
+  text-decoration: underline;
+}
+
+.archive-item-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.archive-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--surface-border);
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--link-color);
+  text-decoration: none;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
+}
+
+.archive-tag:hover {
+  background: rgba(255, 255, 255, 0.1);
+  transform: translateY(-1px);
+}
+
+.archive-date {
+  color: var(--muted-text);
+  white-space: nowrap;
+  font-size: 0.9rem;
+}
+</style>
 
         
 

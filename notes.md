@@ -6,7 +6,20 @@ title: Notes
 <div class="container">
   <h2>Notes :book:</h2>
   {% assign note_year_groups = site.notes | group_by_exp: "note", "note.date | date: '%Y'" | sort: "name" | reverse %}
-  {% assign archive_tags = site.tags | sort %}
+  
+  <!-- Extract tags from notes collection -->
+  {% assign all_tags = '' | split: '' %}
+  {% for note in site.notes %}
+    {% if note.tags %}
+      {% for tag in note.tags %}
+        {% unless all_tags contains tag %}
+          {% assign all_tags = all_tags | push: tag %}
+        {% endunless %}
+      {% endfor %}
+    {% endif %}
+  {% endfor %}
+  {% assign all_tags = all_tags | sort %}
+  
   <div class="archive-summary" aria-label="Notes statistics">
     <div class="archive-stat">
       <strong>{{ site.notes | size }}</strong>
@@ -17,7 +30,7 @@ title: Notes
       <span>个年份</span>
     </div>
     <div class="archive-stat">
-      <strong>{{ archive_tags | size }}</strong>
+      <strong>{{ all_tags | size }}</strong>
       <span>个标签</span>
     </div>
   </div>
@@ -34,10 +47,15 @@ title: Notes
   <div class="archive-group" aria-label="Notes archive by tag">
     <h3>按标签归类</h3>
     <div class="archive-chips">
-      {% for tag in archive_tags %}
-        {% assign tag_name = tag[0] %}
-        {% assign tag_count = tag[1] | size %}
-        <a class="archive-chip" href="{{ '/tags/' | append: tag_name | slugify | append: '/' | relative_url }}">#{{ tag_name }} ({{ tag_count }})</a>
+      {% for tag in all_tags %}
+        {% assign tag_count = 0 %}
+        {% for note in site.notes %}
+          {% if note.tags contains tag %}
+            {% assign tag_count = tag_count | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+        {% assign slugified_tag = tag | slugify %}
+        <a class="archive-chip" href="/tags/{{ slugified_tag }}/">#{{ tag }} ({{ tag_count }})</a>
       {% endfor %}
     </div>
   </div>

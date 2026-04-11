@@ -217,6 +217,36 @@
             -webkit-backdrop-filter: blur(10px);
         }
 
+        .doc-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--surface-border);
+        }
+
+        .doc-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .doc-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid var(--surface-border);
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--link-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .doc-tag:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-1px);
+        }
+
         .doc-panel a {
             color: var(--link-color);
         }
@@ -319,6 +349,76 @@ body[data-theme="dark"] .theme-toggle::after { content: "Night"; }
         <div class="container">
   <h2>Notes <img class="emoji" title=":book:" alt=":book:" src="https://github.githubassets.com/images/icons/emoji/unicode/1f4d6.png" height="20" width="20">
 </h2>
+  
+  
+  <!-- Extract tags from notes collection -->
+  
+  
+  
+  
+  <div class="archive-summary" aria-label="Notes statistics">
+    <div class="archive-stat">
+      <strong>2</strong>
+      <span>篇笔记</span>
+    </div>
+    <div class="archive-stat">
+      <strong>2</strong>
+      <span>个年份</span>
+    </div>
+    <div class="archive-stat">
+      <strong>6</strong>
+      <span>个标签</span>
+    </div>
+  </div>
+
+  <div class="archive-group" aria-label="Notes archive by year">
+    <h3>按年份归档</h3>
+    <div class="archive-chips">
+      
+        <a class="archive-chip" href="/archives/2026/">2026 (1)</a>
+      
+        <a class="archive-chip" href="/archives/2025/">2025 (1)</a>
+      
+    </div>
+  </div>
+
+  <div class="archive-group" aria-label="Notes archive by tag">
+    <h3>按标签归类</h3>
+    <div class="archive-chips">
+      
+        
+        
+        
+        <a class="archive-chip" href="/tags/c/">#c (1)</a>
+      
+        
+        
+        
+        <a class="archive-chip" href="/tags/cs61c/">#cs61c (1)</a>
+      
+        
+        
+        
+        <a class="archive-chip" href="/tags/jekyll/">#jekyll (1)</a>
+      
+        
+        
+        
+        <a class="archive-chip" href="/tags/risc-v/">#risc-v (1)</a>
+      
+        
+        
+        
+        <a class="archive-chip" href="/tags/setup/">#setup (1)</a>
+      
+        
+        
+        
+        <a class="archive-chip" href="/tags/static-site/">#static-site (1)</a>
+      
+    </div>
+  </div>
+
   <div class="card-list">
     
     
@@ -651,6 +751,68 @@ web端连接本地venus,用于debug
 
 <style>
 :root { --entry-card-height: 12.5rem; }
+
+.archive-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.archive-stat {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid var(--card-border);
+  background: var(--card-bg);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+
+.archive-stat strong {
+  font-size: 1.45rem;
+  line-height: 1;
+}
+
+.archive-stat span,
+.archive-group h3 {
+  color: var(--card-muted-text);
+}
+
+.archive-group {
+  margin-top: 18px;
+}
+
+.archive-group h3 {
+  margin: 0 0 10px;
+  font-size: 1rem;
+}
+
+.archive-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.archive-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--card-border);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--card-text);
+  text-decoration: none;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.archive-chip:hover {
+  transform: translateY(-2px);
+  background: rgba(255, 255, 255, 0.12);
+}
 
 .card-list { display: flex; flex-direction: column; gap: 16px; padding-top: 14px; }
 .card { 

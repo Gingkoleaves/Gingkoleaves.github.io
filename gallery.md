@@ -89,8 +89,9 @@ permalink: /gallery/
 
 .gallery-item img {
   width: 100%;
-  height: clamp(280px, 60vw, 640px);
-  object-fit: contain;
+  height: auto;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
   display: block;
   border-radius: 12px;
   background: rgba(0, 0, 0, 0.08);
@@ -123,8 +124,6 @@ permalink: /gallery/
     padding: 0.75rem;
   }
 
-  .gallery-item img {
-    height: clamp(220px, 72vw, 420px);
-  }
 }
+
 </style>

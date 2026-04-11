@@ -217,6 +217,36 @@
             -webkit-backdrop-filter: blur(10px);
         }
 
+        .doc-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid var(--surface-border);
+        }
+
+        .doc-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .doc-tag {
+            display: inline-flex;
+            align-items: center;
+            padding: 4px 10px;
+            border-radius: 999px;
+            border: 1px solid var(--surface-border);
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--link-color);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .doc-tag:hover {
+            background: rgba(255, 255, 255, 0.12);
+            transform: translateY(-1px);
+        }
+
         .doc-panel a {
             color: var(--link-color);
         }
@@ -317,6 +347,22 @@ body[data-theme="dark"] .theme-toggle::after { content: "Night"; }
     <div class="site-shell">
         
         <article class="doc-panel">
+            
+            <div class="doc-header">
+                <div class="doc-tags">
+                    
+                    
+                    <a href="/tags/jekyll/" class="doc-tag">#jekyll</a>
+                    
+                    
+                    <a href="/tags/setup/" class="doc-tag">#setup</a>
+                    
+                    
+                    <a href="/tags/static-site/" class="doc-tag">#static-site</a>
+                    
+                </div>
+            </div>
+            
             <h2 id="jekyll-">Jekyll !</h2>
 
 <p>Jekyll 作为一个基于 Ruby 的静态网站生成器，非常适合处理程序员的个人博客或项目文档（尤其是托管在 GitHub Pages 上时）。</p>
