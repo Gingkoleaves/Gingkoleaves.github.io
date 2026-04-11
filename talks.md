@@ -58,8 +58,8 @@ title: Talks
         {% assign slugified_tag = tag | slugify %}
         <a
           class="archive-chip"
-          href="{{ '/talks/?tag=' | append: tag | url_encode | relative_url }}"
-          data-filter-tag="{{ tag | escape }}"
+          href="{{ '/talks/?tag=' | append: slugified_tag | relative_url }}"
+          data-filter-tag="{{ slugified_tag }}"
           aria-pressed="false"
         >{{ tag }} ({{ tag_count }})</a>
       {% endfor %}
@@ -81,7 +81,14 @@ title: Talks
           {% break %}
         {% endif %}
       {% endfor %}
-      <a href="{{ talk.url }}" class="talk-card" data-talk-tags="{{ talk.tags | join: '|' | downcase | escape }}">
+      {% assign talk_tag_keys = '' | split: '' %}
+      {% if talk.tags %}
+        {% for tag in talk.tags %}
+          {% assign tag_key = tag | slugify %}
+          {% assign talk_tag_keys = talk_tag_keys | push: tag_key %}
+        {% endfor %}
+      {% endif %}
+      <a href="{{ talk.url }}" class="talk-card" data-talk-tags="{{ talk_tag_keys | join: '|' }}">
         {% if cover != '' %}
           <img class="entry-cover" src="{{ cover | relative_url }}" alt="{{ talk.title | default: 'Talk cover' }}" loading="lazy" />
         {% endif %}
@@ -190,6 +197,7 @@ title: Talks
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
+.talk-card.is-hidden { display: none !important; }
 .entry-cover {
   width: 100%;
   height: 8.5rem;
@@ -208,7 +216,7 @@ title: Talks
 }
 .talk-card .content p:last-child { margin-bottom: 0; }
 .meta {
-  margin-top: 2px;
+  margin-top: auto;
   font-size: 0.92rem;
   color: var(--card-muted-text);
 }
@@ -216,7 +224,9 @@ title: Talks
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
+  margin-top: auto;
 }
+.card-tags + .meta { margin-top: 2px; }
 .tag {
   display: inline-block;
   padding: 4px 10px;
@@ -239,6 +249,12 @@ title: Talks
   }
 
   const chips = Array.from(filterBar.querySelectorAll('[data-filter-tag]'));
+  const slugify = (value) => String(value || '')
+    .toLowerCase()
+    .trim()
+    .replace(/[^a-z0-9\s-]/g, '')
+    .replace(/\s+/g, '-')
+    .replace(/-+/g, '-');
 
   const setActiveChip = (active) => {
     chips.forEach((chip) => {
@@ -255,7 +271,7 @@ title: Talks
     cards.forEach((card) => {
       const tags = String(card.getAttribute('data-talk-tags') || '').toLowerCase().split('|').filter(Boolean);
       const visible = normalized === '__all__' || tags.includes(normalized);
-      card.hidden = !visible;
+      card.classList.toggle('is-hidden', !visible);
       if (visible) shown += 1;
     });
 
@@ -268,7 +284,7 @@ title: Talks
     } else {
       summary.textContent = `Tag: ${tagValue}, matched ${shown} talks`;
       if (window.history && window.history.replaceState) {
-        const next = '{{ '/talks/' | relative_url }}' + '?tag=' + encodeURIComponent(tagValue);
+        const next = '{{ '/talks/' | relative_url }}' + '?tag=' + encodeURIComponent(normalized);
         window.history.replaceState({}, '', next);
       }
     }
@@ -285,9 +301,10 @@ title: Talks
   const params = new URLSearchParams(window.location.search);
   const initialTag = params.get('tag');
   if (initialTag) {
+    const initialKey = slugify(initialTag);
     const initialChip = chips.find((chip) => {
       const value = (chip.getAttribute('data-filter-tag') || '').toLowerCase();
-      return value === initialTag.toLowerCase();
+      return value === initialKey;
     });
     if (initialChip) {
       applyFilter(initialChip.getAttribute('data-filter-tag'), initialChip);
