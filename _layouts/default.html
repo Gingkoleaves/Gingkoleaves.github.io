@@ -282,8 +282,12 @@
             <div class="doc-header">
                 <div class="doc-tags">
                     {% for tag in page.tags %}
-                    {% assign slugified_tag = tag | slugify %}
-                    <a href="{{ '/tags/' | append: slugified_tag | append: '/' | relative_url }}" class="doc-tag">{{ tag }}</a>
+                    {% if page.collection == 'talks' %}
+                    {% assign tag_target = '/talks/?tag=' %}
+                    {% else %}
+                    {% assign tag_target = '/notes/?tag=' %}
+                    {% endif %}
+                    <a href="{{ tag_target | append: tag | url_encode | relative_url }}" class="doc-tag">{{ tag }}</a>
                     {% endfor %}
                 </div>
             </div>

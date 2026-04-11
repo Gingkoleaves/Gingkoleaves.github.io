@@ -23,12 +23,8 @@ jekyll-archives:
   enabled:
     - year
   layouts:
-    tag: archive
-    category: archive
     year: archive
   permalinks:
-    category: /categories/:name/
-    tag: /tags/:name/
     year: /archives/:year/
 
 highlighter: rouge

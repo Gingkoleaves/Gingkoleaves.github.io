@@ -46,7 +46,8 @@ title: Talks
 
   <div class="archive-group" aria-label="Talks archive by tag">
     <h3>Archived by tags</h3>
-    <div class="archive-chips">
+    <div class="archive-chips" id="talk-tag-filters">
+      <a class="archive-chip archive-chip-active" href="#" data-filter-tag="__all__" aria-pressed="true">All ({{ site.talks | size }})</a>
       {% for tag in all_tags %}
         {% assign tag_count = 0 %}
         {% for talk in site.talks %}
@@ -55,10 +56,17 @@ title: Talks
           {% endif %}
         {% endfor %}
         {% assign slugified_tag = tag | slugify %}
-        <a class="archive-chip" href="{{ '/tags/' | append: slugified_tag | append: '/' | relative_url }}">{{ tag }} ({{ tag_count }})</a>
+        <a
+          class="archive-chip"
+          href="{{ '/talks/?tag=' | append: tag | url_encode | relative_url }}"
+          data-filter-tag="{{ tag | escape }}"
+          aria-pressed="false"
+        >{{ tag }} ({{ tag_count }})</a>
       {% endfor %}
     </div>
   </div>
+
+  <p id="talk-filter-summary" class="archive-summary-line" aria-live="polite">Currently showing all {{ site.talks | size }} talks</p>
 
   <div class="talk-list">
     {% assign image_exts = 'jpg,jpeg,png,webp,gif' | split: ',' %}
@@ -73,7 +81,7 @@ title: Talks
           {% break %}
         {% endif %}
       {% endfor %}
-      <a href="{{ talk.url }}" class="talk-card">
+      <a href="{{ talk.url }}" class="talk-card" data-talk-tags="{{ talk.tags | join: '|' | downcase | escape }}">
         {% if cover != '' %}
           <img class="entry-cover" src="{{ cover | relative_url }}" alt="{{ talk.title | default: 'Talk cover' }}" loading="lazy" />
         {% endif %}
@@ -127,6 +135,12 @@ title: Talks
   margin-top: 18px;
 }
 
+.archive-summary-line {
+  margin: 12px 2px 2px;
+  color: var(--card-muted-text);
+  font-size: 0.95rem;
+}
+
 .archive-group h3 {
   margin: 0 0 10px;
   font-size: 1rem;
@@ -154,6 +168,11 @@ title: Talks
 .archive-chip:hover {
   transform: translateY(-2px);
   background: rgba(255, 255, 255, 0.12);
+}
+
+.archive-chip-active {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.35);
 }
 
 .talk-list { display: flex; flex-direction: column; gap: 16px; padding-top: 14px; }
@@ -208,3 +227,76 @@ title: Talks
   border: 1px solid rgba(255, 255, 255, 0.15);
 }
 </style>
+
+<script>
+(() => {
+  const filterBar = document.getElementById('talk-tag-filters');
+  const summary = document.getElementById('talk-filter-summary');
+  const cards = Array.from(document.querySelectorAll('.talk-list .talk-card[data-talk-tags]'));
+
+  if (!filterBar || !summary || cards.length === 0) {
+    return;
+  }
+
+  const chips = Array.from(filterBar.querySelectorAll('[data-filter-tag]'));
+
+  const setActiveChip = (active) => {
+    chips.forEach((chip) => {
+      const isActive = chip === active;
+      chip.classList.toggle('archive-chip-active', isActive);
+      chip.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
+  };
+
+  const applyFilter = (tagValue, chip) => {
+    const normalized = String(tagValue || '__all__').toLowerCase();
+    let shown = 0;
+
+    cards.forEach((card) => {
+      const tags = String(card.getAttribute('data-talk-tags') || '').toLowerCase().split('|').filter(Boolean);
+      const visible = normalized === '__all__' || tags.includes(normalized);
+      card.hidden = !visible;
+      if (visible) shown += 1;
+    });
+
+    setActiveChip(chip);
+    if (normalized === '__all__') {
+      summary.textContent = `Currently showing all ${shown} talks`;
+      if (window.history && window.history.replaceState) {
+        window.history.replaceState({}, '', '{{ '/talks/' | relative_url }}');
+      }
+    } else {
+      summary.textContent = `Tag: ${tagValue}, matched ${shown} talks`;
+      if (window.history && window.history.replaceState) {
+        const next = '{{ '/talks/' | relative_url }}' + '?tag=' + encodeURIComponent(tagValue);
+        window.history.replaceState({}, '', next);
+      }
+    }
+  };
+
+  chips.forEach((chip) => {
+    chip.addEventListener('click', (event) => {
+      event.preventDefault();
+      const selectedTag = chip.getAttribute('data-filter-tag') || '__all__';
+      applyFilter(selectedTag, chip);
+    });
+  });
+
+  const params = new URLSearchParams(window.location.search);
+  const initialTag = params.get('tag');
+  if (initialTag) {
+    const initialChip = chips.find((chip) => {
+      const value = (chip.getAttribute('data-filter-tag') || '').toLowerCase();
+      return value === initialTag.toLowerCase();
+    });
+    if (initialChip) {
+      applyFilter(initialChip.getAttribute('data-filter-tag'), initialChip);
+      return;
+    }
+  }
+  const allChip = chips.find((chip) => (chip.getAttribute('data-filter-tag') || '') === '__all__');
+  if (allChip) {
+    applyFilter('__all__', allChip);
+  }
+})();
+</script>

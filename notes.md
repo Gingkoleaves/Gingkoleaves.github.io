@@ -23,20 +23,20 @@ title: Notes
   <div class="archive-summary" aria-label="Notes statistics">
     <div class="archive-stat">
       <strong>{{ site.notes | size }}</strong>
-      <span>篇笔记</span>
+      <span>notes</span>
     </div>
     <div class="archive-stat">
       <strong>{{ note_year_groups | size }}</strong>
-      <span>个年份</span>
+      <span>different year</span>
     </div>
     <div class="archive-stat">
       <strong>{{ all_tags | size }}</strong>
-      <span>个标签</span>
+      <span>tags</span>
     </div>
   </div>
 
   <div class="archive-group" aria-label="Notes archive by year">
-    <h3>按年份归档</h3>
+    <h3>Archived by year</h3>
     <div class="archive-chips">
       {% for group in note_year_groups %}
         <a class="archive-chip" href="{{ '/archives/' | append: group.name | append: '/' | relative_url }}">{{ group.name }} ({{ group.items | size }})</a>
@@ -45,8 +45,9 @@ title: Notes
   </div>
 
   <div class="archive-group" aria-label="Notes archive by tag">
-    <h3>按标签归类</h3>
-    <div class="archive-chips">
+    <h3>Archived by tags</h3>
+    <div class="archive-chips" id="note-tag-filters">
+      <a class="archive-chip archive-chip-active" href="#" data-filter-tag="__all__" aria-pressed="true">All ({{ site.notes | size }})</a>
       {% for tag in all_tags %}
         {% assign tag_count = 0 %}
         {% for note in site.notes %}
@@ -55,10 +56,17 @@ title: Notes
           {% endif %}
         {% endfor %}
         {% assign slugified_tag = tag | slugify %}
-        <a class="archive-chip" href="{{ '/tags/' | append: slugified_tag | append: '/' | relative_url }}">{{ tag }} ({{ tag_count }})</a>
+        <a
+          class="archive-chip"
+          href="{{ '/notes/?tag=' | append: tag | url_encode | relative_url }}"
+          data-filter-tag="{{ tag | escape }}"
+          aria-pressed="false"
+        >{{ tag }} ({{ tag_count }})</a>
       {% endfor %}
     </div>
   </div>
+
+  <p id="note-filter-summary" class="archive-summary-line" aria-live="polite">Currently showing all {{ site.notes | size }} notes</p>
 
   <div class="card-list">
     {% assign image_exts = 'jpg,jpeg,png,webp,gif' | split: ',' %}
@@ -73,7 +81,7 @@ title: Notes
           {% break %}
         {% endif %}
       {% endfor %}
-      <a href="{{ note.permalink }}" class="card">
+      <a href="{{ note.permalink }}" class="card" data-note-tags="{{ note.tags | join: '|' | downcase | escape }}">
         {% if cover != '' %}
           <img class="entry-cover" src="{{ cover | relative_url }}" alt="{{ note.title }} cover" loading="lazy" />
         {% endif %}
@@ -128,6 +136,12 @@ title: Notes
   margin-top: 18px;
 }
 
+.archive-summary-line {
+  margin: 12px 2px 2px;
+  color: var(--card-muted-text);
+  font-size: 0.95rem;
+}
+
 .archive-group h3 {
   margin: 0 0 10px;
   font-size: 1rem;
@@ -157,6 +171,11 @@ title: Notes
   background: rgba(255, 255, 255, 0.12);
 }
 
+.archive-chip-active {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
 .card-list { display: flex; flex-direction: column; gap: 16px; padding-top: 14px; }
 .card { 
   box-sizing: border-box;
@@ -182,10 +201,11 @@ title: Notes
 .card p, .card .date { color: var(--card-muted-text); }
 .card h3 {
   margin: 0;
-  line-height: 1.35;
-  display: -webkit-box;
-  -webkit-line-clamp: 1;
-  -webkit-box-orient: vertical;
+  line-height: 1.4;
+  padding-bottom: 2px;
+  display: block;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   overflow: hidden;
 }
 .card p {
@@ -219,3 +239,75 @@ title: Notes
   border: 1px solid rgba(255, 255, 255, 0.15);
 }
 </style>
+
+<script>
+(() => {
+  const filterBar = document.getElementById('note-tag-filters');
+  const summary = document.getElementById('note-filter-summary');
+  const cards = Array.from(document.querySelectorAll('.card-list .card[data-note-tags]'));
+
+  if (!filterBar || !summary || cards.length === 0) {
+    return;
+  }
+
+  const chips = Array.from(filterBar.querySelectorAll('[data-filter-tag]'));
+  const setActiveChip = (active) => {
+    chips.forEach((chip) => {
+      const isActive = chip === active;
+      chip.classList.toggle('archive-chip-active', isActive);
+      chip.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+    });
+  };
+
+  const applyFilter = (tagValue, chip) => {
+    const normalized = String(tagValue || '__all__').toLowerCase();
+    let shown = 0;
+
+    cards.forEach((card) => {
+      const tags = String(card.getAttribute('data-note-tags') || '').toLowerCase().split('|').filter(Boolean);
+      const visible = normalized === '__all__' || tags.includes(normalized);
+      card.hidden = !visible;
+      if (visible) shown += 1;
+    });
+
+    setActiveChip(chip);
+    if (normalized === '__all__') {
+      summary.textContent = `Currently showing all ${shown} notes`;
+      if (window.history && window.history.replaceState) {
+        window.history.replaceState({}, '', '{{ '/notes/' | relative_url }}');
+      }
+    } else {
+      summary.textContent = `Tag: ${tagValue}, matched ${shown} notes`;
+      if (window.history && window.history.replaceState) {
+        const next = '{{ '/notes/' | relative_url }}' + '?tag=' + encodeURIComponent(tagValue);
+        window.history.replaceState({}, '', next);
+      }
+    }
+  };
+
+  chips.forEach((chip) => {
+    chip.addEventListener('click', (event) => {
+      event.preventDefault();
+      const selectedTag = chip.getAttribute('data-filter-tag') || '__all__';
+      applyFilter(selectedTag, chip);
+    });
+  });
+
+  const params = new URLSearchParams(window.location.search);
+  const initialTag = params.get('tag');
+  if (initialTag) {
+    const initialChip = chips.find((chip) => {
+      const value = (chip.getAttribute('data-filter-tag') || '').toLowerCase();
+      return value === initialTag.toLowerCase();
+    });
+    if (initialChip) {
+      applyFilter(initialChip.getAttribute('data-filter-tag'), initialChip);
+      return;
+    }
+  }
+  const allChip = chips.find((chip) => (chip.getAttribute('data-filter-tag') || '') === '__all__');
+  if (allChip) {
+    applyFilter('__all__', allChip);
+  }
+})();
+</script>

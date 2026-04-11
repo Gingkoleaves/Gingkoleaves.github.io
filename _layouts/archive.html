@@ -13,13 +13,6 @@ layout: default
           {% assign archive_posts = archive_posts | push: item %}
         {% endif %}
       {% endfor %}
-    {% elsif page.filter_category %}
-      {% assign archive_posts = '' | split: '' %}
-      {% for item in combined_posts %}
-        {% if item.categories contains page.filter_category %}
-          {% assign archive_posts = archive_posts | push: item %}
-        {% endif %}
-      {% endfor %}
     {% elsif page.filter_year %}
       {% assign archive_posts = '' | split: '' %}
       {% for item in combined_posts %}
@@ -35,16 +28,14 @@ layout: default
   {% assign archive_count = archive_posts | size %}
   <h2>
     {% if page.type == 'tag' %}
-      标签: #{{ page.title }}
-    {% elsif page.type == 'category' %}
-      分类: {{ page.title }}
+      Tag: #{{ page.title }}
     {% elsif page.type == 'year' %}
-      {{ page.title }} 年
+      Year: {{ page.title }}
     {% else %}
-      归档: {{ page.title }}
+      Archive: {{ page.title }}
     {% endif %}
   </h2>
-  <p class="archive-summary-line">共 {{ archive_count }} 篇内容</p>
+  <p class="archive-summary-line">{{ archive_count }} entries</p>
 
   {% if archive_posts.size > 0 %}
   <ul class="archive-list">
@@ -56,8 +47,12 @@ layout: default
           {% if post.tags %}
           <div class="archive-item-tags">
             {% for tag in post.tags %}
-            {% assign slugified_tag = tag | slugify %}
-            <a href="{{ '/tags/' | append: slugified_tag | append: '/' | relative_url }}" class="archive-tag">#{{ tag }}</a>
+            {% if post.collection == 'talks' %}
+            {% assign tag_target = '/talks/?tag=' %}
+            {% else %}
+            {% assign tag_target = '/notes/?tag=' %}
+            {% endif %}
+            <a href="{{ tag_target | append: tag | url_encode | relative_url }}" class="archive-tag">#{{ tag }}</a>
             {% endfor %}
           </div>
           {% endif %}
@@ -67,7 +62,7 @@ layout: default
     {% endfor %}
   </ul>
   {% else %}
-  <p class="archive-empty">该分类下暂无内容</p>
+  <p class="archive-empty">No entries found.</p>
   {% endif %}
 </div>
 
