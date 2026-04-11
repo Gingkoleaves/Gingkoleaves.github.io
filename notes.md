@@ -6,8 +6,22 @@ title: Notes
 <div class="container">
   <h2>Notes :book:</h2>
   <div class="card-list">
+    {% assign image_exts = 'jpg,jpeg,png,webp,gif' | split: ',' %}
     {% for note in site.notes %}
+      {% assign stem = note.path | split: '/' | last | split: '.' | first %}
+      {% assign cover = '' %}
+      {% for ext in image_exts %}
+        {% assign candidate = '/assets/images/notes_content/' | append: stem | append: '.' | append: ext %}
+        {% assign file = site.static_files | where: 'path', candidate | first %}
+        {% if file %}
+          {% assign cover = candidate %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
       <a href="{{ note.permalink }}" class="card">
+        {% if cover != '' %}
+          <img class="entry-cover" src="{{ cover | relative_url }}" alt="{{ note.title }} cover" loading="lazy" />
+        {% endif %}
         <h3>{{ note.title }}</h3>
         <p>{{ note.excerpt | strip_html }}</p>
         <span class="date">{{ note.date | date: "%Y-%m-%d" }}</span>
@@ -31,6 +45,13 @@ title: Notes
   padding: 20px; text-decoration: none; color: var(--card-text); transition: 0.3s;
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+}
+.entry-cover {
+  width: 100%;
+  height: 8.5rem;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--card-border);
 }
 .card:hover { transform: translateY(-5px); box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
 .card h3, .card p, .card .date { color: inherit; }

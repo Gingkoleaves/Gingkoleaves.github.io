@@ -3,7 +3,7 @@ layout: default
 title: Home
 ---
 
-{% assign home_background_image = site.home_background_image | default: '/assets/images/bg4.jpg' %}
+{% assign home_background_image = site.home_background_image | default: '/assets/images/background/bg4.jpg' %}
 
 <section class="hero-screen">
   <div class="hero-backdrop" aria-hidden="true"></div>

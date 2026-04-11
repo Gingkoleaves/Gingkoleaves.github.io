@@ -12,31 +12,31 @@ permalink: /gallery/
 
     <div class="gallery-grid" aria-label="Gallery images">
       <figure class="gallery-item">
-        <img src="{{ '/assets/images/bg1.jpg' | relative_url }}" alt="Gallery image 1" loading="lazy" />
+        <img src="{{ '/assets/images/background/bg1.jpg' | relative_url }}" alt="Gallery image 1" loading="lazy" />
         <figcaption>
           <span>Image 1</span>
         </figcaption>
       </figure>
       <figure class="gallery-item">
-        <img src="{{ '/assets/images/bg2.jpg' | relative_url }}" alt="Gallery image 2" loading="lazy" />
+        <img src="{{ '/assets/images/background/bg2.jpg' | relative_url }}" alt="Gallery image 2" loading="lazy" />
         <figcaption>
           <span>Image 2</span>
         </figcaption>
       </figure>
       <figure class="gallery-item">
-        <img src="{{ '/assets/images/bg3.jpg' | relative_url }}" alt="Gallery image 3" loading="lazy" />
+        <img src="{{ '/assets/images/background/bg3.jpg' | relative_url }}" alt="Gallery image 3" loading="lazy" />
         <figcaption>
           <span>Image 3</span>
         </figcaption>
       </figure>
       <figure class="gallery-item">
-        <img src="{{ '/assets/images/bg4.jpg' | relative_url }}" alt="Gallery image 4" loading="lazy" />
+        <img src="{{ '/assets/images/background/bg4.jpg' | relative_url }}" alt="Gallery image 4" loading="lazy" />
         <figcaption>
           <span>Image 4</span>
         </figcaption>
       </figure>
       <figure class="gallery-item">
-        <img src="{{ '/assets/images/bg5.jpg' | relative_url }}" alt="Gallery image 5" loading="lazy" />
+        <img src="{{ '/assets/images/background/bg5.jpg' | relative_url }}" alt="Gallery image 5" loading="lazy" />
         <figcaption>
           <span>Image 5</span>
         </figcaption>

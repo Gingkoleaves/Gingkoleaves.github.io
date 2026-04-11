@@ -221,6 +221,15 @@
             color: var(--link-color);
         }
 
+        .doc-panel img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 1rem auto;
+            border-radius: 10px;
+            border: 1px solid var(--surface-border);
+        }
+
         .doc-panel :first-child {
             margin-top: 0;
         }
@@ -250,5 +259,31 @@
         </footer>
     </div>
     <script src="{{ "/assets/js/konami.js" | relative_url }}" defer></script>
+        {% if page.collection == "notes" or page.collection == "talks" %}
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var panel = document.querySelector(".doc-panel");
+                if (!panel) return;
+
+                var assetRoot = "{{ '/assets/images/notes_content/' | relative_url }}";
+                var configuredSubdir = {{ page.asset_subdir | jsonify }};
+                var subdir = configuredSubdir || {{ page.slug | jsonify }};
+                if (!subdir) return;
+
+                panel.querySelectorAll("img[src]").forEach(function (img) {
+                    var src = (img.getAttribute("src") || "").trim();
+                    if (!src) return;
+
+                    var isExternal = /^(?:[a-z]+:)?\/\//i.test(src);
+                    var isAbsolute = src.startsWith("/");
+                    var isDataUrl = src.startsWith("data:");
+                    var isHash = src.startsWith("#");
+                    if (isExternal || isAbsolute || isDataUrl || isHash) return;
+
+                    img.setAttribute("src", assetRoot + subdir + "/" + src);
+                });
+            });
+        </script>
+        {% endif %}
 </body>
 </html>

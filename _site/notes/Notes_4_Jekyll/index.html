@@ -221,6 +221,15 @@
             color: var(--link-color);
         }
 
+        .doc-panel img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 1rem auto;
+            border-radius: 10px;
+            border: 1px solid var(--surface-border);
+        }
+
         .doc-panel :first-child {
             margin-top: 0;
         }
@@ -400,5 +409,31 @@ body[data-theme="dark"] .theme-toggle::after { content: "Night"; }
         </footer>
     </div>
     <script src="/assets/js/konami.js" defer></script>
+        
+        <script>
+            document.addEventListener("DOMContentLoaded", function () {
+                var panel = document.querySelector(".doc-panel");
+                if (!panel) return;
+
+                var assetRoot = "/assets/images/notes_content/";
+                var configuredSubdir = null;
+                var subdir = configuredSubdir || "Note_4_Jekyll";
+                if (!subdir) return;
+
+                panel.querySelectorAll("img[src]").forEach(function (img) {
+                    var src = (img.getAttribute("src") || "").trim();
+                    if (!src) return;
+
+                    var isExternal = /^(?:[a-z]+:)?\/\//i.test(src);
+                    var isAbsolute = src.startsWith("/");
+                    var isDataUrl = src.startsWith("data:");
+                    var isHash = src.startsWith("#");
+                    if (isExternal || isAbsolute || isDataUrl || isHash) return;
+
+                    img.setAttribute("src", assetRoot + subdir + "/" + src);
+                });
+            });
+        </script>
+        
 </body>
 </html>

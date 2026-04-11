@@ -6,8 +6,22 @@ title: Talks
 <div class="container">
   <h2>Talks :speech_balloon:</h2>
   <div class="talk-list">
+    {% assign image_exts = 'jpg,jpeg,png,webp,gif' | split: ',' %}
     {% for talk in site.talks %}
+      {% assign stem = talk.path | split: '/' | last | split: '.' | first %}
+      {% assign cover = '' %}
+      {% for ext in image_exts %}
+        {% assign candidate = '/assets/images/notes_content/' | append: stem | append: '.' | append: ext %}
+        {% assign file = site.static_files | where: 'path', candidate | first %}
+        {% if file %}
+          {% assign cover = candidate %}
+          {% break %}
+        {% endif %}
+      {% endfor %}
       <a href="{{ talk.url }}" class="talk-card">
+        {% if cover != '' %}
+          <img class="entry-cover" src="{{ cover | relative_url }}" alt="{{ talk.title | default: 'Talk cover' }}" loading="lazy" />
+        {% endif %}
         <div class="content">{{ talk.content | strip_html }}</div>
         <div class="meta">{{ talk.date | date: "%Y-%m-%d" }}</div>
       </a>
@@ -32,6 +46,13 @@ title: Talks
   color: var(--card-text);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
+}
+.entry-cover {
+  width: 100%;
+  height: 8.5rem;
+  object-fit: cover;
+  border-radius: 8px;
+  border: 1px solid var(--card-border);
 }
 .talk-card .content {
   color: inherit;

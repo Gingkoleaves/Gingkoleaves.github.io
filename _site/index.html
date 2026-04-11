@@ -221,6 +221,15 @@
             color: var(--link-color);
         }
 
+        .doc-panel img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+            margin: 1rem auto;
+            border-radius: 10px;
+            border: 1px solid var(--surface-border);
+        }
+
         .doc-panel :first-child {
             margin-top: 0;
         }
@@ -310,7 +319,7 @@ body[data-theme="dark"] .theme-toggle::after { content: "Night"; }
         
 <section class="hero-screen">
   <div class="hero-backdrop" aria-hidden="true"></div>
-  <img class="hero-image" src="/assets/images/bg4.jpg" alt="Homepage background">
+  <img class="hero-image" src="/assets/images/background/bg4.jpg" alt="Homepage background">
   <div class="hero-overlay">
     <div class="hero-copy">
       <h1>Welcome to Gingkoleaves' personal homepage</h1>
@@ -443,7 +452,7 @@ body[data-theme="dark"] .theme-toggle::after { content: "Night"; }
   .hero-backdrop {
     position: absolute;
     inset: 0;
-    background-image: url('/assets/images/bg4.jpg');
+    background-image: url('/assets/images/background/bg4.jpg');
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -516,7 +525,7 @@ body[data-theme="dark"] .theme-toggle::after { content: "Night"; }
     content: '';
     position: absolute;
     inset: 0;
-    background-image: url('/assets/images/bg4.jpg');
+    background-image: url('/assets/images/background/bg4.jpg');
     background-position: center center;
     background-repeat: no-repeat;
     background-size: cover;
@@ -671,5 +680,6 @@ body[data-theme="dark"] .theme-toggle::after { content: "Night"; }
         </footer>
     </div>
     <script src="/assets/js/konami.js" defer></script>
+        
 </body>
 </html>
