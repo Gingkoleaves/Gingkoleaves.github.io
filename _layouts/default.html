@@ -237,14 +237,13 @@
             border: 1px solid var(--surface-border);
             background: rgba(255, 255, 255, 0.08);
             color: var(--link-color);
-            text-decoration: none;
             font-size: 0.9rem;
-            transition: all 0.2s ease;
+            transition: background-color 0.2s ease;
+            cursor: default;
         }
 
         .doc-tag:hover {
             background: rgba(255, 255, 255, 0.12);
-            transform: translateY(-1px);
         }
 
         .doc-panel a {
@@ -282,12 +281,7 @@
             <div class="doc-header">
                 <div class="doc-tags">
                     {% for tag in page.tags %}
-                    {% if page.collection == 'talks' %}
-                    {% assign tag_target = '/talks/?tag=' %}
-                    {% else %}
-                    {% assign tag_target = '/notes/?tag=' %}
-                    {% endif %}
-                    <a href="{{ tag_target | append: tag | url_encode | relative_url }}" class="doc-tag">{{ tag }}</a>
+                    <span class="doc-tag">{{ tag }}</span>
                     {% endfor %}
                 </div>
             </div>
