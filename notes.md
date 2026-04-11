@@ -79,6 +79,13 @@ title: Notes
         {% endif %}
         <h3>{{ note.title }}</h3>
         <p>{{ note.excerpt | strip_html }}</p>
+        {% if note.tags %}
+          <div class="card-tags">
+            {% for tag in note.tags %}
+              <span class="tag">{{ tag }}</span>
+            {% endfor %}
+          </div>
+        {% endif %}
         <span class="date">{{ note.date | date: "%Y-%m-%d" }}</span>
       </a>
     {% endfor %}
@@ -190,11 +197,25 @@ title: Notes
   overflow: hidden;
 }
 .card .date {
-  margin-top: auto;
+  margin-top: 2px;
 }
 .card .date,
 .talk-card .meta {
   font-size: 0.92rem;
   color: var(--card-muted-text);
+}
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.tag {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--card-muted-text);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 </style>

@@ -4,6 +4,34 @@ layout: default
 
 <div class="container">
   {% assign archive_posts = page.posts %}
+  {% if archive_posts == nil %}
+    {% assign combined_posts = site.notes | concat: site.talks %}
+    {% if page.filter_tag %}
+      {% assign archive_posts = '' | split: '' %}
+      {% for item in combined_posts %}
+        {% if item.tags contains page.filter_tag %}
+          {% assign archive_posts = archive_posts | push: item %}
+        {% endif %}
+      {% endfor %}
+    {% elsif page.filter_category %}
+      {% assign archive_posts = '' | split: '' %}
+      {% for item in combined_posts %}
+        {% if item.categories contains page.filter_category %}
+          {% assign archive_posts = archive_posts | push: item %}
+        {% endif %}
+      {% endfor %}
+    {% elsif page.filter_year %}
+      {% assign archive_posts = '' | split: '' %}
+      {% for item in combined_posts %}
+        {% assign item_year = item.date | date: '%Y' %}
+        {% if item_year == page.filter_year %}
+          {% assign archive_posts = archive_posts | push: item %}
+        {% endif %}
+      {% endfor %}
+    {% else %}
+      {% assign archive_posts = '' | split: '' %}
+    {% endif %}
+  {% endif %}
   {% assign archive_count = archive_posts | size %}
   <h2>
     {% if page.type == 'tag' %}

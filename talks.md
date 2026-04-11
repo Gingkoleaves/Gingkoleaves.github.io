@@ -78,6 +78,13 @@ title: Talks
           <img class="entry-cover" src="{{ cover | relative_url }}" alt="{{ talk.title | default: 'Talk cover' }}" loading="lazy" />
         {% endif %}
         <div class="content">{{ talk.content | strip_html }}</div>
+        {% if talk.tags %}
+          <div class="card-tags">
+            {% for tag in talk.tags %}
+              <span class="tag">{{ tag }}</span>
+            {% endfor %}
+          </div>
+        {% endif %}
         <div class="meta">{{ talk.date | date: "%Y-%m-%d" }}</div>
       </a>
     {% endfor %}
@@ -182,8 +189,22 @@ title: Talks
 }
 .talk-card .content p:last-child { margin-bottom: 0; }
 .meta {
-  margin-top: auto;
+  margin-top: 2px;
   font-size: 0.92rem;
   color: var(--card-muted-text);
+}
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.tag {
+  display: inline-block;
+  padding: 4px 10px;
+  font-size: 0.8rem;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--card-muted-text);
+  border: 1px solid rgba(255, 255, 255, 0.15);
 }
 </style>

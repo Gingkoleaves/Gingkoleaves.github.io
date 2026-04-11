@@ -21,8 +21,6 @@ feed:
 # Archives
 jekyll-archives:
   enabled:
-    - tags
-    - categories
     - year
   layouts:
     tag: archive

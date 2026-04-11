@@ -26,13 +26,23 @@ module Jekyll
       
       # Generate tag pages
       tags.each do |tag, posts|
+        next if static_archive_page_exists?(site, '/tags/', tag)
         generate_archive_page(site, tag, posts, 'tag', '/tags/')
       end
       
       # Generate category pages
       categories.each do |category, posts|
+        next if static_archive_page_exists?(site, '/categories/', category)
         generate_archive_page(site, category, posts, 'category', '/categories/')
       end
+    end
+
+    def static_archive_page_exists?(site, base_path, name)
+      slug = Jekyll::Utils.slugify(name)
+      base_dir = base_path.sub(%r{^/}, '').sub(%r{/$}, '')
+
+      File.exist?(site.in_source_dir(base_dir, slug, 'index.md')) ||
+        File.exist?(site.in_source_dir(base_dir, slug, 'index.html'))
     end
     
     def process_document(doc, tags, categories)
