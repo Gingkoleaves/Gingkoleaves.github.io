@@ -596,9 +596,21 @@ web端连接本地venus,用于debug</p>
                 if (!panel) return;
 
                 var assetRoot = "/assets/images/notes_content/";
-                var configuredSubdir = "CS61C";
-                var subdir = configuredSubdir || "Note_4_CS61C";
-                if (!subdir) return;
+                var configuredSubdir = "Note_4_CS61C";
+                var pageSlug = "Note_4_CS61C";
+                var pageStem = "Note_4_CS61C";
+                var candidateSubdirs = [];
+
+                [configuredSubdir, pageStem, pageSlug].forEach(function (value) {
+                    if (typeof value !== "string") return;
+                    var trimmed = value.trim();
+                    if (!trimmed) return;
+                    if (candidateSubdirs.indexOf(trimmed) === -1) {
+                        candidateSubdirs.push(trimmed);
+                    }
+                });
+
+                if (candidateSubdirs.length === 0) return;
 
                 panel.querySelectorAll("img[src]").forEach(function (img) {
                     var src = (img.getAttribute("src") || "").trim();
@@ -610,7 +622,21 @@ web端连接本地venus,用于debug</p>
                     var isHash = src.startsWith("#");
                     if (isExternal || isAbsolute || isDataUrl || isHash) return;
 
-                    img.setAttribute("src", assetRoot + subdir + "/" + src);
+                    var relSrc = src.replace(/^\.\//, "");
+                    var candidateIndex = 0;
+
+                    function applyNextCandidate() {
+                        if (candidateIndex >= candidateSubdirs.length) {
+                            img.removeEventListener("error", applyNextCandidate);
+                            return;
+                        }
+                        var nextPath = assetRoot + candidateSubdirs[candidateIndex] + "/" + relSrc;
+                        candidateIndex += 1;
+                        img.setAttribute("src", nextPath);
+                    }
+
+                    img.addEventListener("error", applyNextCandidate, { once: false });
+                    applyNextCandidate();
                 });
             });
         </script>

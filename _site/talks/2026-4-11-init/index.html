@@ -352,8 +352,20 @@ body[data-theme="dark"] .theme-toggle::after { content: "Night"; }
 
                 var assetRoot = "/assets/images/notes_content/";
                 var configuredSubdir = null;
-                var subdir = configuredSubdir || "init";
-                if (!subdir) return;
+                var pageSlug = "init";
+                var pageStem = "2026-4-11-init";
+                var candidateSubdirs = [];
+
+                [configuredSubdir, pageStem, pageSlug].forEach(function (value) {
+                    if (typeof value !== "string") return;
+                    var trimmed = value.trim();
+                    if (!trimmed) return;
+                    if (candidateSubdirs.indexOf(trimmed) === -1) {
+                        candidateSubdirs.push(trimmed);
+                    }
+                });
+
+                if (candidateSubdirs.length === 0) return;
 
                 panel.querySelectorAll("img[src]").forEach(function (img) {
                     var src = (img.getAttribute("src") || "").trim();
@@ -365,7 +377,21 @@ body[data-theme="dark"] .theme-toggle::after { content: "Night"; }
                     var isHash = src.startsWith("#");
                     if (isExternal || isAbsolute || isDataUrl || isHash) return;
 
-                    img.setAttribute("src", assetRoot + subdir + "/" + src);
+                    var relSrc = src.replace(/^\.\//, "");
+                    var candidateIndex = 0;
+
+                    function applyNextCandidate() {
+                        if (candidateIndex >= candidateSubdirs.length) {
+                            img.removeEventListener("error", applyNextCandidate);
+                            return;
+                        }
+                        var nextPath = assetRoot + candidateSubdirs[candidateIndex] + "/" + relSrc;
+                        candidateIndex += 1;
+                        img.setAttribute("src", nextPath);
+                    }
+
+                    img.addEventListener("error", applyNextCandidate, { once: false });
+                    applyNextCandidate();
                 });
             });
         </script>

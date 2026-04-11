@@ -3,6 +3,8 @@ layout: default
 ---
 
 <div class="container">
+  {% assign archive_posts = page.posts | default: site.tags[page.title] | default: site.categories[page.title] %}
+  {% assign archive_count = archive_posts | size %}
   <h2>
     {% if page.type == 'tag' %}
       Tag: {{ page.title }}
@@ -14,9 +16,9 @@ layout: default
       Archive: {{ page.title }}
     {% endif %}
   </h2>
+  <p class="archive-summary-line">共 {{ archive_count }} 篇内容</p>
 
   <ul class="archive-list">
-    {% assign archive_posts = page.posts | default: site.tags[page.title] | default: site.categories[page.title] %}
     {% for post in archive_posts %}
       <li class="archive-item">
         <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
@@ -33,6 +35,11 @@ layout: default
   padding: 0;
   display: grid;
   gap: 10px;
+}
+
+.archive-summary-line {
+  margin: 0.25rem 0 0;
+  color: var(--muted-text);
 }
 
 .archive-item {

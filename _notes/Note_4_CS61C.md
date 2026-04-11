@@ -9,7 +9,7 @@ tags:
     - cs61c
     - c
     - risc-v
-asset_subdir: CS61C
+asset_subdir: Note_4_CS61C
 ---
 
 # 2025 年 9 月 15 日
