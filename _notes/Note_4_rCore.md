@@ -479,7 +479,11 @@ println!("A baby dog is called a {}", <Dog as Animal>::baby_name());
 将struct dog注解为trait Animal，这会调用impl Aninmal for dog
 
 完全限定语法精确定义为：
+
+‵``rs
 <Type as Trait>::function(receiver_if_method, next_arg, ...);
+```
+
 receive_if_methods是self的表达式，仅方法需要传入，这里是关联函数不需要
 完全限定语法是调用函数最为明确的方式，如果不要调用trait的方法，则去掉"as <trait>"
 
