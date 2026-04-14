@@ -1,6 +1,6 @@
 ---
 layout: default
-title: CS61C Notes
+title: Trip to CS61C
 date: 2025-09-15
 permalink: /notes/Note_4_CS61C/
 categories:
