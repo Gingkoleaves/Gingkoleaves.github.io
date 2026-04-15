@@ -1,3 +1,16 @@
+---
+layout: default
+title: Trip to Xv6
+date: 2025-10-09
+permalink: /notes/Note_4_XV6/
+categories:
+    - notes
+tags:
+    - os
+    - risc-v
+    - c
+---
+
 # 2025年10月9日
 
 ## Chap2: OS Intro
